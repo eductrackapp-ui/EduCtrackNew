@@ -1,83 +1,192 @@
 package com.equipe7.eductrack.Activity;
 
-import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.TextView;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.equipe7.eductrack.Activity.AdminHomeActivity;
-import com.equipe7.eductrack.Activity.AddScoresActivity;
+import com.equipe7.eductrack.Adapter.LessonAdapter;
 import com.equipe7.eductrack.R;
+import com.equipe7.eductrack.Utils.Lesson;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class LessonsActivity extends AppCompatActivity {
+public class LessonsActivity extends AppCompatActivity implements LessonAdapter.OnLessonActionListener {
 
-    private TextView tvP1, tvP2, tvP3, tvP4, tvP5, tvP6;
+    private static final String TAG = "LessonsActivity";
+    
+    private RecyclerView recyclerLessons;
+    private LessonAdapter lessonAdapter;
+    private List<Lesson> lessonList;
+    private ImageView btnBack, btnAddLesson;
+    
+    private FirebaseFirestore db;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lessons);
 
-        // --- Toolbar avec flèche retour ---
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Lessons by Class");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Active la flèche
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back); // ton icône flèche
+        try {
+            // Initialize Firebase
+            db = FirebaseFirestore.getInstance();
+            
+            // Initialize views
+            initViews();
+            setupRecyclerView();
+            setupClickListeners();
+            
+            // Load lessons from Firestore or create sample data
+            loadLessons();
+        } catch (Exception e) {
+            Log.e(TAG, "Error in onCreate: ", e);
+            showError("Failed to initialize lessons");
         }
-
-        // Initialisation des TextViews
-        tvP1 = findViewById(R.id.tvP1);
-        tvP2 = findViewById(R.id.tvP2);
-        tvP3 = findViewById(R.id.tvP3);
-        tvP4 = findViewById(R.id.tvP4);
-        tvP5 = findViewById(R.id.tvP5);
-        tvP6 = findViewById(R.id.tvP6);
-
-        // Charger les leçons par classe
-        Map<String, String> lessons = getLessons();
-
-        tvP1.setText("P1 Lessons:\n" + lessons.get("P1"));
-        tvP2.setText("P2 Lessons:\n" + lessons.get("P2"));
-        tvP3.setText("P3 Lessons:\n" + lessons.get("P3"));
-        tvP4.setText("P4 Lessons:\n" + lessons.get("P4"));
-        tvP5.setText("P5 Lessons:\n" + lessons.get("P5"));
-        tvP6.setText("P6 Lessons:\n" + lessons.get("P6"));
     }
 
-    private Map<String, String> getLessons() {
-        Map<String, String> lessons = new HashMap<>();
-
-        lessons.put("P1", "Mathematics, French, English, SET, Social Studies, Kinyarwanda");
-        lessons.put("P2", "Mathematics, French, English, SET, Social Studies, Kinyarwanda");
-        lessons.put("P3", "Mathematics, French, English, SET, Social Studies, Kinyarwanda");
-        lessons.put("P4", "Mathematics, French, English, SET, Social Studies, Kinyarwanda");
-        lessons.put("P5", "Mathematics, French, English, SET, Social Studies, Kinyarwanda");
-        lessons.put("P6", "Mathematics, French, English, SET, Social Studies, Kinyarwanda");
-
-        return lessons;
+    private void initViews() {
+        recyclerLessons = findViewById(R.id.recyclerLessons);
+        btnBack = findViewById(R.id.btnBack);
+        btnAddLesson = findViewById(R.id.btnAddLesson);
     }
 
-    // Gestion du clic sur la flèche retour
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            // Retourne sur HomeActivity
-            Intent intent = new Intent(LessonsActivity.this, AdminHomeActivity.class);
-            startActivity(intent);
+    private void setupRecyclerView() {
+        lessonList = new ArrayList<>();
+        lessonAdapter = new LessonAdapter(lessonList, this);
+        lessonAdapter.setOnLessonActionListener(this);
+        
+        recyclerLessons.setLayoutManager(new LinearLayoutManager(this));
+        recyclerLessons.setAdapter(lessonAdapter);
+    }
+
+    private void setupClickListeners() {
+        btnBack.setOnClickListener(v -> {
             finish();
-            return true;
+        });
+
+        btnAddLesson.setOnClickListener(v -> {
+            // TODO: Open add lesson activity
+            showAddLessonDialog();
+        });
+    }
+
+    private void loadLessons() {
+        // First, try to load from Firestore
+        if (db != null) {
+            db.collection("lessons")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    lessonList.clear();
+                    
+                    if (queryDocumentSnapshots.isEmpty()) {
+                        // If no lessons in Firestore, create sample data
+                        createSampleLessons();
+                    } else {
+                        // Load from Firestore
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                            try {
+                                Lesson lesson = doc.toObject(Lesson.class);
+                                lesson.setId(doc.getId());
+                                lessonList.add(lesson);
+                            } catch (Exception e) {
+                                Log.w(TAG, "Error parsing lesson: " + doc.getId(), e);
+                            }
+                        }
+                    }
+                    
+                    lessonAdapter.notifyDataSetChanged();
+                    Log.d(TAG, "Loaded " + lessonList.size() + " lessons");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error loading lessons: ", e);
+                    // Fallback to sample data
+                    createSampleLessons();
+                });
+        } else {
+            createSampleLessons();
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    private void createSampleLessons() {
+        lessonList.clear();
+        
+        String[] classes = {"P1", "P2", "P3", "P4", "P5", "P6"};
+        String[] subjects = {"Mathematics", "French", "English", "SET", "Social Studies", "Kinyarwanda"};
+        
+        for (String classLevel : classes) {
+            for (String subject : subjects) {
+                Lesson lesson = new Lesson(classLevel, subject, subject + " - " + classLevel);
+                lesson.setDescription("Learn " + subject.toLowerCase() + " concepts for " + classLevel + " level");
+                lesson.setDuration(45); // 45 minutes
+                lesson.setStatus("active");
+                lesson.setTeacherName("Sample Teacher");
+                lesson.setTopics(Arrays.asList("Topic 1", "Topic 2", "Topic 3"));
+                
+                lessonList.add(lesson);
+            }
+        }
+        
+        lessonAdapter.notifyDataSetChanged();
+    }
+
+    private void showAddLessonDialog() {
+        // Simple implementation - in a real app, this would open a detailed form
+        Toast.makeText(this, "Add Lesson feature - Coming Soon!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    // LessonAdapter.OnLessonActionListener implementation
+    @Override
+    public void onLessonClick(Lesson lesson) {
+        Toast.makeText(this, "Lesson: " + lesson.getDisplayTitle(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onEditLesson(Lesson lesson) {
+        Toast.makeText(this, "Edit: " + lesson.getDisplayTitle(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDeleteLesson(Lesson lesson) {
+        showDeleteConfirmation(lesson);
+    }
+
+    @Override
+    public void onViewDetails(Lesson lesson) {
+        Toast.makeText(this, "Details: " + lesson.getDisplayTitle(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void showDeleteConfirmation(Lesson lesson) {
+        new AlertDialog.Builder(this)
+            .setTitle("Delete Lesson")
+            .setMessage("Are you sure you want to delete \"" + lesson.getDisplayTitle() + "\"?")
+            .setPositiveButton("Delete", (dialog, which) -> deleteLesson(lesson))
+            .setNegativeButton("Cancel", null)
+            .show();
+    }
+
+    private void deleteLesson(Lesson lesson) {
+        int position = lessonList.indexOf(lesson);
+        if (position != -1) {
+            lessonList.remove(position);
+            lessonAdapter.notifyItemRemoved(position);
+            Toast.makeText(this, "Lesson deleted", Toast.LENGTH_SHORT).show();
+            
+            // TODO: Also delete from Firestore if needed
+        }
     }
 }
