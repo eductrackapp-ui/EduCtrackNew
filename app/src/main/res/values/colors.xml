@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 🎨 Couleurs principales -->
+    <color name="colorPrimary">#5E17EB</color>
+    <color name="colorPrimaryDark">#4A12B6</color>
+    <color name="colorSecondary">#718096</color>
+
+    <!-- 🌍 Background et surfaces -->
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorSurface">#F6F6F6</color>
+    <color name="colorCard">#F3F2F7</color>
+
+    <!-- 📝 Texte -->
+    <color name="colorTextPrimary">#000000</color>
+    <color name="colorTextSecondary">#718096</color>
+    <color name="colorTextHint">#A0AEC0</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+
+    <!-- 🔘 Boutons & feedback -->
+    <color name="colorButton">#5E17EB</color>
+    <color name="colorBorder">#DDDDDD</color>
+    <color name="colorError">#FF4B4B</color>
+    <color name="colorSuccess">#4CAF50</color>
+
+    <!-- 🔗 Lien / action -->
+    <color name="colorLink">#5E17EB</color>
+
+    <!-- 🌫️ Transparence et ombre -->
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorShadow">#1F000000</color>
+
+    <!-- ✅ Manquants pour corriger ton erreur -->
+    <color name="white">#FFFFFF</color> <!-- utilisé dans ic_launcher_background -->
+    <color name="colorAccent">#FF9800</color> <!-- utilisé dans activity_create_admin_account -->
+</resources>

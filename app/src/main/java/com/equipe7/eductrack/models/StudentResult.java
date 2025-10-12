@@ -1,0 +1,4 @@
+package com.equipe7.eductrack.models;
+
+public class StudentResult {
+}

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "291980996981",
+    "project_id": "eductrack-1ba80",
+    "storage_bucket": "eductrack-1ba80.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291980996981:android:e88c122dd7d0e09b22a33c",
+        "android_client_info": {
+          "package_name": "com.equipe7.eductrack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291980996981-ssqddbkgcgtkrnv7uv862j6ghjus57m9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCV-BLisd6Jm0VcX2cbOv2zDWSxMSLzfX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291980996981-ssqddbkgcgtkrnv7uv862j6ghjus57m9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

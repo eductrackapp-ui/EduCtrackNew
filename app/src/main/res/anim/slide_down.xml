@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/decelerate_interpolator">
+
+    <!-- Déplacement vertical de -100% (hors écran) à 0 (sa position finale) -->
+    <translate
+        android:fromYDelta="-100%"
+        android:toYDelta="0%"
+        android:duration="400"/>
+
+    <!-- Optionnel : fade in -->
+    <alpha
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0"
+        android:duration="400"/>
+</set>

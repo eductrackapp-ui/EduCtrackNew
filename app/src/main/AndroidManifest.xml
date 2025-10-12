@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 📌 Essential permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" tools:targetApi="33" />
+
+    <!-- 📌 Optional permissions -->
+    <uses-permission android:name="android.permission.CAMERA"
+        tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:name=".Firebase.EduTrackApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/logon"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logon"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.EduCtrack"
+        tools:targetApi="31">
+
+        <!-- 🔧 Fix AD_SERVICES_CONFIG conflict -->
+        <property
+            android:name="android.adservices.AD_SERVICES_CONFIG"
+            android:resource="@xml/gma_ad_services_config"
+            tools:replace="android:resource" />
+
+        <!-- Splash Activity (Launcher) -->
+        <activity
+            android:name=".Activity.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.EduCtrack.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Authentication -->
+        <activity android:name=".Auth.LoginActivity" android:exported="true" />
+        <activity android:name=".Auth.ForgotPasswordActivity" android:exported="true" />
+        <activity android:name=".Auth.AdminLoginActivity" android:exported="true" />
+        <activity android:name=".Auth.AdminForgotPassword" android:exported="true" />
+
+        <!-- Role selection -->
+        <activity android:name=".Activity.RoleSelectionActivity" android:exported="true" />
+        <activity android:name=".Auth.ActivityParentRegister" android:exported="true" />
+
+        <!-- Registration -->
+        <activity android:name=".Auth.RegisterTeacherActivity" android:exported="true" />
+        <activity android:name=".Auth.CreateAdminAccountActivity" android:exported="true" />
+        <activity android:name=".Auth.ActivityStudentRegister" android:exported="true" />
+
+        <!-- Verification -->
+        <activity android:name=".Auth.VerificationCodeActivity" android:exported="true" />
+
+        <!-- Home screens -->
+        <activity android:name=".Activity.ParentHomeActivity" android:exported="true" />
+        <activity android:name=".Activity.AdminHomeActivity" android:exported="true" />
+        <activity android:name=".Activity.TeacherHomeActivity" android:exported="true"
+            tools:ignore="Instantiatable" />
+
+        <!-- Profile -->
+        <activity android:name=".Activity.ProfileActivity" android:exported="true" />
+
+        <!-- Terms of Use -->
+        <activity android:name=".Auth.TermsOfUseActivity" android:exported="true" />
+
+        <!-- Notifications -->
+        <activity android:name=".Activity.NotificationActivity" android:exported="true" />
+        <activity android:name=".Activity.AdminNotification" android:exported="false"
+            tools:ignore="Instantiatable" />
+
+        <!-- Parent Dashboard -->
+        <activity android:name=".Activity.ActivityParentDashboard" android:exported="true" />
+
+        <!-- Modules -->
+        <activity android:name=".Module.ReportsActivity" android:exported="true" />
+        <activity android:name=".Module.HomeworkActivity" android:exported="true" />
+        <activity android:name=".Module.StudentExamResultsActivity" android:exported="true" />
+        <activity android:name=".Module.AddCalculateScoresActivity" android:exported="true"/>
+
+        <!-- New Activities -->
+        <activity android:name=".Activity.SearchActivity" android:exported="true"
+            tools:ignore="Instantiatable" />
+        <activity android:name=".Activity.TeacherDashboard" android:exported="true"
+            tools:ignore="Instantiatable" />
+        <activity android:name=".Activity.LessonsActivity" android:exported="true"
+            tools:ignore="Instantiatable" />
+        <activity android:name=".Activity.StudentListActivity" android:exported="true"
+            tools:ignore="Instantiatable" />
+
+        <!-- Google Ads -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3324838736230246~7397836141" />
+
+        <!-- Firebase initialization -->
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="true" />
+
+        <!-- Multidex support -->
+        <meta-data
+            android:name="android.support.MULTIDEX_ENABLE"
+            android:value="true" />
+
+        <!-- Other Activities -->
+        <activity android:name=".Activity.StudentDashboardActivity" />
+        <activity android:name=".Activity.AnalyticsDashboard"
+            tools:ignore="Instantiatable" />
+        <activity android:name=".Auth.ActivityTeacherRegister" />
+        <activity android:name=".Activity.AdminProfileActivity"
+            tools:ignore="MissingClass" />
+
+    </application>
+</manifest>

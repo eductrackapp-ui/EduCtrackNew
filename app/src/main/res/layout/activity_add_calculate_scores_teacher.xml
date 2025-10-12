@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Titre -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📊 Calculate Student Scores"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#5E17EB"
+            android:gravity="center"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Code élève -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilStudentCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundMode="outline"
+            app:startIconDrawable="@drawable/ic_profile"
+            app:startIconTint="#5E17EB"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etStudentCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Student Code"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Bouton pour charger les notes -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLoadScores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Load Scores"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#5E17EB"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Table pour afficher les notes -->
+        <TableLayout
+            android:id="@+id/tableScores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1,2,3,4"
+            android:background="#E0E0E0"/>
+
+        <!-- Résultats par période -->
+        <TextView
+            android:id="@+id/tvPeriodResults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"
+            android:background="#EDE7F6"/>
+
+        <!-- Bouton pour poster sur Firestore -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPostScores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post Scores to Firestore"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#4CAF50"
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 📝 Titre -->
+        <TextView
+            android:id="@+id/tvExercisesTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📝 Student Exercises"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#5E17EB"
+            android:gravity="center"
+            android:layout_marginBottom="20dp" />
+        <include layout="@layout/bottom_nav_bar"/>
+
+        <!-- 🔑 Student Code -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilStudentCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxBackgroundMode="outline"
+            app:startIconDrawable="@drawable/ic_profile"
+            app:startIconTint="#5E17EB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etStudentCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Student Code (ex: EDF-P3-001)"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- ✅ Bouton pour charger les exercices -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLoadExercises"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Load Exercises"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#5E17EB"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/ic_search"
+            app:iconGravity="textStart"
+            app:iconTint="#FFFFFF"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- ================== TABLEAU DES EXERCICES ================== -->
+        <TextView
+            android:text="📅 Exercises Table"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:background="#EDE7F6"
+            android:layout_marginBottom="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TableLayout
+            android:id="@+id/tableExercises"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1,2"
+            android:background="#E0E0E0">
+
+            <!-- Header et lignes ajoutés dynamiquement en Java -->
+
+        </TableLayout>
+
+    </LinearLayout>
+</ScrollView>

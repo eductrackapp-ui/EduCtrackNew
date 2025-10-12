@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:gravity="center"
+    android:background="@drawable/bg_circle_light">
+
+    <!-- Icône statut en ligne / hors ligne -->
+    <ImageView
+        android:id="@+id/imgOnlineStatus"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_offline"
+        android:contentDescription="@string/user_status_icon"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Nom de l'utilisateur -->
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="#000"
+        android:layout_marginBottom="2dp" />
+
+    <!-- Email de l'utilisateur -->
+    <TextView
+        android:id="@+id/tvUserEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="email@example.com"
+        android:textSize="12sp"
+        android:textColor="#555" />
+
+</LinearLayout>

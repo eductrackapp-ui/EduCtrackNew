@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5"
+    android:padding="16dp">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@android:drawable/ic_menu_info_details"
+            android:layout_marginEnd="8dp"
+            app:tint="#5E17EB" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Teacher Dashboard"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#5E17EB" />
+    </LinearLayout>
+
+    <!-- Create Teacher Account Button -->
+    <Button
+        android:id="@+id/btnCreateTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Teacher Account"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:backgroundTint="#5E17EB"
+        android:drawableStart="@android:drawable/ic_input_add"
+        android:drawablePadding="8dp"
+        android:padding="12dp"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Online Teachers Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_menu_myplaces"
+            android:layout_marginEnd="8dp"
+            app:tint="#000000" />
+
+        <TextView
+            android:id="@+id/tvOnlineTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Online Teachers by Class"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000" />
+    </LinearLayout>
+
+    <!-- RecyclerView for teacher list -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerTeachers"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
+
+</LinearLayout>

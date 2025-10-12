@@ -1,0 +1,197 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 🔄 Spinner pour sélectionner l’élève -->
+        <TextView
+            android:id="@+id/tvPerformanceIntro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Student Performance Overview"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#5E17EB"
+            android:gravity="center"
+            android:layout_marginBottom="12dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilStudentSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="#5E17EB"
+            app:startIconDrawable="@drawable/ic_profile"
+            app:startIconTint="#5E17EB">
+
+            <AutoCompleteTextView
+                android:id="@+id/actvStudent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Search Student ID (e.g. EDF-KA...)"
+                android:inputType="text"
+                android:completionThreshold="1"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 📚 Champs de performance par matière -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilMath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="#5E17EB"
+            app:startIconDrawable="@drawable/ic_math"
+            app:startIconTint="#5E17EB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mathematics"
+                android:enabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilFrench"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="#5E17EB"
+            app:startIconDrawable="@drawable/ic_french"
+            app:startIconTint="#5E17EB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFrench"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="French"
+                android:enabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilEnglish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="#5E17EB"
+            app:startIconDrawable="@drawable/ic_english"
+            app:startIconTint="#5E17EB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEnglish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="English"
+                android:enabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilSet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="#5E17EB"
+            app:startIconDrawable="@drawable/ic_set"
+            app:startIconTint="#5E17EB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="SET"
+                android:enabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilSocial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom= "12dp"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="#5E17EB"
+            app:startIconDrawable="@drawable/ic_social"
+            app:startIconTint="#5E17EB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSocial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Social Studies"
+                android:enabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilKinyarwanda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="#5E17EB"
+            app:startIconDrawable="@drawable/ic_kinyarwanda"
+            app:startIconTint="#5E17EB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etKinyarwanda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Kinyarwanda"
+                android:enabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 📊 Moyenne globale -->
+        <TextView
+            android:id="@+id/tvOverallTitle"
+            android:text="Overall Statistics – All Subjects"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ProgressBar
+            android:id="@+id/overallProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:max="100"
+            android:progress="0"
+            android:progressTint="#5E17EB"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvOverallPercent"
+            android:text="Overall Average: --%"
+            android:textSize="14sp"
+            android:textColor="#333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- 🔄 Bouton de mise à jour -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update"
+            android:enabled="false"
+            app:backgroundTint="#5E17EB"
+            app:cornerRadius="8dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</ScrollView>

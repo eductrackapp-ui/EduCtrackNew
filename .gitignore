@@ -1,0 +1,25 @@
+# Java build files
+*.class
+*.jar
+*.war
+*.ear
+
+# IDEs
+/.idea/
+/*.iml
+*.log
+*.swp
+
+# Gradle
+.gradle/
+/build/
+
+# Maven
+target/
+
+# Firebase secrets
+serviceAccountKey.json
+*.json.json
+
+# Environment files
+.env

@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:gravity="center_vertical"
+    android:background="?attr/selectableItemBackground">
+
+    <!-- Photo utilisateur -->
+    <ImageView
+        android:id="@+id/ivUser"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_user"
+        android:scaleType="centerCrop"
+        android:background="@drawable/bg_circle_light"
+        android:padding="4dp"
+        android:layout_marginEnd="12dp"/>
+
+    <!-- Texte notification -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Nom + message -->
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amber Dona added a new story"
+            android:textSize="15sp"
+            android:textColor="#000000"/>
+
+        <!-- Heure -->
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 hours ago"
+            android:textSize="13sp"
+            android:textColor="#808080"/>
+    </LinearLayout>
+
+</LinearLayout>

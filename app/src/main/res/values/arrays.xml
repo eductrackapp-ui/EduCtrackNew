@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Parent relations -->
+    <string-array name="parent_relations">
+        <item>Select relationship</item>
+        <item>Mother</item>
+        <item>Father</item>
+        <item>Guardian</item>
+        <item>Aunt</item>
+        <item>Uncle</item>
+        <item>Grandmother</item>
+        <item>Grandfather</item>
+        <item>Other</item>
+    </string-array>
+
+    <!-- School names -->
+    <string-array name="school_names">
+        <item>Select the school</item>
+        <item>Eden Family School Kacyiru</item>
+        <item>Eden Family School Gisozi</item>
+        <item>Eden Family School Kimisagara</item>
+    </string-array>
+
+    <!-- Class levels -->
+    <string-array name="class_levels">
+        <item>Select class</item>
+        <item>P1</item>
+        <item>P2</item>
+        <item>P3</item>
+        <item>P4</item>
+        <item>P5</item>
+        <item>P6</item>
+    </string-array>
+
+    <!-- Teacher roles -->
+    <string-array name="teacher_roles">
+        <item>Select role</item>
+        <item>Titulaire</item>
+        <item>Assistant</item>
+    </string-array>
+
+    <!-- Gender list -->
+    <string-array name="gender_list">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="periods">
+        <item>Select period</item>
+        <item>Period 1</item>
+        <item>Period 2</item>
+        <item>Period 3</item>
+    </string-array>
+    <string-array name="years">
+        <item>Select year</item>
+        <item>2026/2027</item>
+        <item>2025/2026</item>
+        <item>2024/2025</item>
+        <item>2023/2024</item>
+        <item>2022/2023</item>
+        <item>2021/2022</item>
+    </string-array>
+
+
+</resources>

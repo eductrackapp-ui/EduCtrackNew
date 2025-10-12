@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#5E17EB"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="Lessons by Class"
+        app:titleTextColor="@android:color/white" />
+
+    <!-- Scrollable content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- ===== P1 ===== -->
+            <TextView
+                android:id="@+id/tvP1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="P1 Lessons"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:background="#EDE7F6"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp">
+
+                <TextView android:text="Mathematics" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="French" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="English" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="SET" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="Social Studies" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="Kinyarwanda" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- ===== P2 ===== -->
+            <TextView
+                android:id="@+id/tvP2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="P2 Lessons"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:background="#EDE7F6"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp">
+
+                <TextView android:text="Mathematics" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="French" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="English" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="SET" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="Social Studies" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="Kinyarwanda" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- ===== P3 ===== -->
+            <TextView
+                android:id="@+id/tvP3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="P3 Lessons"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:background="#EDE7F6"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp">
+
+                <TextView android:text="Mathematics" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="French" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="English" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="SET" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="Social Studies" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="Kinyarwanda" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- ===== P4 ===== -->
+            <TextView
+                android:id="@+id/tvP4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="P4 Lessons"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:background="#EDE7F6"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp">
+
+                <TextView android:text="Mathematics" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="French" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="English" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="SET" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="Social Studies" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="Kinyarwanda" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- ===== P5 ===== -->
+            <TextView
+                android:id="@+id/tvP5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="P5 Lessons"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:background="#EDE7F6"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp">
+
+                <TextView android:text="Mathematics" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="French" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="English" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="SET" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="Social Studies" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="Kinyarwanda" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- ===== P6 ===== -->
+            <TextView
+                android:id="@+id/tvP6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="P6 Lessons"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:background="#EDE7F6"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp">
+
+                <TextView android:text="Mathematics" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="French" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="English" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="SET" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="Social Studies" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:text="Kinyarwanda" android:padding="4dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

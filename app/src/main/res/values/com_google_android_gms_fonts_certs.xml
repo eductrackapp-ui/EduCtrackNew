@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="com_google_android_gms_fonts_certs">
+        <item>@array/com_google_android_gms_fonts_certs_dev</item>
+        <item>@array/com_google_android_gms_fonts_certs_prod</item>
+    </array>
+
+    <string-array name="com_google_android_gms_fonts_certs_dev">
+        <item>
+            MIIEqDCCA5CgAwIBAgIJANr5egpON6smMA0GCSqGSIb3DQEBBQUAMIGIMQswCQYDVQQGEwJVUzETMBEGA1UECBMK
+            Q2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEjMCEGA1UEChMaR29vZ2xlIFRydXN0ZWQgU2Vydmlj
+            ZXMgQ0ExEzARBgNVBAMTCkdUUyBDQSBHMiAwHhcNMTYwMTEyMTkwOTAwWhcNNDYwMTEyMTkwOTAwWjCBiDELMAkG
+            A1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBGcmFuY2lzY28xIzAhBgNVBAoTGkdv
+            b2dsZSBUcnVzdGVkIFNlcnZpY2VzIENBMRMwEQYDVQQDEwpHVFMgQ0EgRzIwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+            DwAwggEKAoIBAQCt3uyLt6nUyyOeLQQecF+7EMyP8YyR7X1D0Q3vK4/1+xo1uIkFfHbUAoNaV7Zf59dj7SQtO7FG
+            +33sJKxpO7NlyZupZYb8wQl9lFbtOB/z5gv1k0lw0NqkBgAghUjkMQgNypgYr+YdEzRAYlJYLU08gFhddZCFl0oF
+            5F+v5anKf8SmGbYMyQdYXQnZ7FbdZMTT7ugf1bYlqyrA6/xwXc+SMldmgPh2Hhrd
+        </item>
+    </string-array>
+
+    <string-array name="com_google_android_gms_fonts_certs_prod">
+        <item>
+            MIIEqjCCA5KgAwIBAgIJALiNfAMwDGVkMA0GCSqGSIb3DQEBCwUAMIGIMQswCQYDVQQGEwJVUzETMBEGA1UE
+            CBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEjMCEGA1UEChMaR29vZ2xlIFRydXN0ZWQg
+            U2VydmljZXMgQ0ExEzARBgNVBAMTCkdUUyBDQSBHMiAwHhcNMTYwMTEyMTkwOTAwWhcNNDYwMTEyMTkwOTAw
+            WjCBiDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBGcmFuY2lzY28x
+            IzAhBgNVBAoTGkdvb2dsZSBUcnVzdGVkIFNlcnZpY2VzIENBMRMwEQYDVQQDEwpHVFMgQ0EgRzIwggEiMA0G
+            CSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCt3uyLt6nUyyOeLQQecF+7EMyP8YyR7X1D0Q3vK4/1+xo1uIkFf
+            HbUAoNaV7Zf59dj7SQtO7FG+33sJKxpO7NlyZupZYb8wQl9lFbtOB/z5gv1k0lw0NqkBgAghUjkMQgNypgYr
+            +YdEzRAYlJYLU08gFhddZCFl0oF5F+v5anKf8SmGbYMyQdYXQnZ7FbdZMTT7ugf1bYlqyrA6/xwXc+SMldmg
+        </item>
+    </string-array>
+</resources>

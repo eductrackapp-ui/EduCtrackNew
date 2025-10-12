@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 📝 Titre -->
+        <TextView
+            android:id="@+id/tvExamTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📘 Student Exam Results"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#5E17EB"
+            android:gravity="center"
+            android:layout_marginBottom="20dp" />
+        <include layout="@layout/bottom_nav_bar"/>
+
+        <!-- 🔑 Student Code -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilStudentCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxBackgroundMode="outline"
+            app:startIconDrawable="@drawable/ic_profile"
+            app:startIconTint="#5E17EB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etStudentCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Student Code (ex: EDF-P3-001)"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- ✅ Bouton pour charger les résultats -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLoadResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="Load Results"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#5E17EB"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/ic_search"
+            app:iconGravity="textStart"
+            app:iconTint="#FFFFFF" />
+
+        <!-- ================== WEEK 1 ================== -->
+        <TextView
+            android:text="📅 Week 1 Results"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:background="#EDE7F6"
+            android:layout_marginBottom="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TableLayout
+            android:id="@+id/tableWeek1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1,2"
+            android:background="#E0E0E0">
+
+            <TableRow android:background="#5E17EB">
+                <TextView android:text="Lesson" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+                <TextView android:text="Exam Title" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+                <TextView android:text="Score" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Mathematics" android:padding="6dp"/>
+                <TextView android:text="Fractions Exam" android:padding="6dp"/>
+                <TextView android:id="@+id/tvMathW1" android:text="--" android:padding="6dp"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="French" android:padding="6dp"/>
+                <TextView android:text="Dictée" android:padding="6dp"/>
+                <TextView android:id="@+id/tvFrenchW1" android:text="--" android:padding="6dp"/>
+            </TableRow>
+        </TableLayout>
+
+        <!-- ================== WEEK 2 ================== -->
+        <TextView
+            android:text="📅 Week 2 Results"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:background="#EDE7F6"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TableLayout
+            android:id="@+id/tableWeek2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1,2"
+            android:background="#E0E0E0">
+
+            <TableRow android:background="#5E17EB">
+                <TextView android:text="Lesson" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+                <TextView android:text="Exam Title" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+                <TextView android:text="Score" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="English" android:padding="6dp"/>
+                <TextView android:text="Essay Writing" android:padding="6dp"/>
+                <TextView android:id="@+id/tvEnglishW2" android:text="--" android:padding="6dp"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="SET" android:padding="6dp"/>
+                <TextView android:text="Science Project" android:padding="6dp"/>
+                <TextView android:id="@+id/tvSetW2" android:text="--" android:padding="6dp"/>
+            </TableRow>
+        </TableLayout>
+
+        <!-- ================== WEEK 3 ================== -->
+        <TextView
+            android:text="📅 Week 3 Results"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:background="#EDE7F6"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TableLayout
+            android:id="@+id/tableWeek3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1,2"
+            android:background="#E0E0E0">
+
+            <TableRow android:background="#5E17EB">
+                <TextView android:text="Lesson" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+                <TextView android:text="Exam Title" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+                <TextView android:text="Score" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Social Studies" android:padding="6dp"/>
+                <TextView android:text="History Exam" android:padding="6dp"/>
+                <TextView android:id="@+id/tvSocialW3" android:text="--" android:padding="6dp"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Kinyarwanda" android:padding="6dp"/>
+                <TextView android:text="Grammar Test" android:padding="6dp"/>
+                <TextView android:id="@+id/tvKinyarwandaW3" android:text="--" android:padding="6dp"/>
+            </TableRow>
+        </TableLayout>
+
+        <!-- ================== WEEK 4 ================== -->
+        <TextView
+            android:text="📅 Week 4 Results"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:background="#EDE7F6"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TableLayout
+            android:id="@+id/tableWeek4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1,2"
+            android:background="#E0E0E0">
+
+            <TableRow android:background="#5E17EB">
+                <TextView android:text="Lesson" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+                <TextView android:text="Exam Title" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+                <TextView android:text="Score" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Social Studies" android:padding="6dp"/>
+                <TextView android:text="Civics Quiz" android:padding="6dp"/>
+                <TextView android:id="@+id/tvSocialW4" android:text="--" android:padding="6dp"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Kinyarwanda" android:padding="6dp"/>
+                <TextView android:text="Composition Test" android:padding="6dp"/>
+                <TextView android:id="@+id/tvKinyarwandaW4" android:text="--" android:padding="6dp"/>
+            </TableRow>
+        </TableLayout>
+
+        <!-- ================== WEEK 5 ================== -->
+        <TextView
+            android:text="📅 Week 5 Results"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:background="#EDE7F6"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TableLayout
+            android:id="@+id/tableWeek5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1,2"
+            android:background="#E0E0E0">
+
+            <TableRow android:background="#5E17EB">
+                <TextView android:text="Lesson" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+                <TextView android:text="Exam Title" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+                <TextView android:text="Score" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Social Studies" android:padding="6dp"/>
+                <TextView android:text="Geography Assignment" android:padding="6dp"/>
+                <TextView android:id="@+id/tvSocialW5" android:text="--" android:padding="6dp"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Kinyarwanda" android:padding="6dp"/>
+                <TextView android:text="Oral Test" android:padding="6dp"/>
+                <TextView android:id="@+id/tvKinyarwandaW5" android:text="--" android:padding="6dp"/>
+            </TableRow>
+        </TableLayout>
+
+        <!-- ================== WEEK 6 ================== -->
+        <TextView
+            android:text="📅 Week 6 Results"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:background="#EDE7F6"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TableLayout
+            android:id="@+id/tableWeek6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1,2"
+            android:background="#E0E0E0">
+
+            <TableRow android:background="#5E17EB">
+                <TextView android:text="Lesson" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+                <TextView android:text="Exam Title" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+                <TextView android:text="Score" android:textColor="#FFF" android:padding="6dp" android:textStyle="bold"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="English" android:padding="6dp"/>
+                <TextView android:text="Final Grammar Test" android:padding="6dp"/>
+                <TextView android:id="@+id/tvEnglishW6" android:text="--" android:padding="6dp"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Mathematics" android:padding="6dp"/>
+                <TextView android:text="End-Term Exam" android:padding="6dp"/>
+                <TextView android:id="@+id/tvMathW6" android:text="--" android:padding="6dp"/>
+            </TableRow>
+        </TableLayout>
+
+    </LinearLayout>
+</ScrollView>

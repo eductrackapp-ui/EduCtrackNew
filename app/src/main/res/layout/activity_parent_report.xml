@@ -1,0 +1,18 @@
+<!-- res/layout/activity_report.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Report"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#5E17EB"
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <include layout="@layout/bottom_nav_bar"/>
+</LinearLayout>

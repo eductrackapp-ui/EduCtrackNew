@@ -1,0 +1,131 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F5F5F5"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Mathematics -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#5E17EB"
+        app:startIconDrawable="@drawable/ic_math"
+        app:startIconTint="#5E17EB">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etMath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mathematics"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- French -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#5E17EB"
+        app:startIconDrawable="@drawable/ic_french"
+        app:startIconTint="#5E17EB">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etFrench"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="French"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- English -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#5E17EB"
+        app:startIconDrawable="@drawable/ic_english"
+        app:startIconTint="#5E17EB">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEnglish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="English"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- SET -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#5E17EB"
+        app:startIconDrawable="@drawable/ic_set"
+        app:startIconTint="#5E17EB">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Science and Technology (SET)"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Social Studies -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#5E17EB"
+        app:startIconDrawable="@drawable/ic_social"
+        app:startIconTint="#5E17EB">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSocial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Social Studies"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Kinyarwanda -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#5E17EB"
+        app:startIconDrawable="@drawable/ic_kinyarwanda"
+        app:startIconTint="#5E17EB">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etKinyarwanda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kinyarwanda"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- ✅ Save Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSaveAndBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save and Return"
+        app:backgroundTint="#5E17EB"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="20dp"
+        app:cornerRadius="8dp"
+        app:icon="@drawable/ic_save"
+        app:iconTint="#FFFFFF"
+        app:iconGravity="textStart" />
+
+</LinearLayout>
