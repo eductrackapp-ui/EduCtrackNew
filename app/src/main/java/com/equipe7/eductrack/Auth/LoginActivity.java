@@ -151,6 +151,11 @@ public class LoginActivity extends AppCompatActivity {
     // --------------------------
     private void handleUserRole(DocumentSnapshot document) {
         String role = document.getString("role");
+        
+        // Update last login timestamp for teachers
+        if ("teacher".equalsIgnoreCase(role)) {
+            updateLastLogin(document.getId());
+        }
 
         if ("parent".equalsIgnoreCase(role)) {
             startActivity(new Intent(LoginActivity.this, ParentHomeActivity.class));
@@ -159,7 +164,15 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, TeacherHomeActivity.class));
             finish();
         } else {
-            Toast.makeText(this, "Role not recognized", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Role not recognized: " + role, Toast.LENGTH_SHORT).show();
         }
+    }
+    
+    private void updateLastLogin(String uid) {
+        db.collection("teachers").document(uid)
+                .update("lastLogin", System.currentTimeMillis())
+                .addOnFailureListener(e -> {
+                    // Silent fail - not critical
+                });
     }
 }

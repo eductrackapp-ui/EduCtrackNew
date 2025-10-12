@@ -43,6 +43,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
 
     // 🔹 Librairies externes
     implementation("com.github.lzyzsd:circleprogress:1.2.1")

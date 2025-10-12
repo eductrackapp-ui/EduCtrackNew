@@ -96,6 +96,10 @@ public class ActivityTeacherRegister extends AppCompatActivity {
                     data.put("classLevel", classLevel);
                     data.put("position", position);
                     data.put("teacherCode", teacherCode);
+                    data.put("role", "teacher"); // ✅ CRITICAL: Add role field
+                    data.put("isActive", true);
+                    data.put("createdAt", System.currentTimeMillis());
+                    data.put("lastLogin", null);
 
                     db.collection("teachers")
                             .document(uid)
