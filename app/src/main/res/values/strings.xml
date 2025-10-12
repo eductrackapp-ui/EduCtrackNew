@@ -45,13 +45,6 @@
     <!-- Terms of Use -->
     <string name="terms_of_use">Terms of Use</string>
 
-    <string-array name="nursery_classes">
-        <item>N1 A</item>
-        <item>N1 B</item>
-        <item>N2</item>
-        <item>N3</item>
-    </string-array>
-
         <string name="title_nursery_registration">Nursery Registration</string>
         <string name="enter_info">Please enter your information</string>
         <string name="first_name">First Name</string>
@@ -69,7 +62,43 @@
         <string name="login_button">Login</string>
     <string name="carousel_image">carousel_image\n</string>
     <string name="user_status_icon">user_status_icon</string>
-
+    <string-array name="assessment_types">
+        <item>Examens</item>
+        <item>Homework</item>
+        <item>Exercices</item>
+    </string-array>
+    <string-array name="weeks">
+        <item>Week 1</item>
+        <item>Week 2</item>
+        <item>Week 3</item>
+        <item>Week 4</item>
+        <item>Week 5</item>
+        <item>Week 6</item>
+        <item>Week 7</item>
+        <item>Week 8</item>
+        <item>Week 9</item>
+        <item>Week 10</item>
+        <item>Week 11</item>
+        <item>Week 12</item>
+    </string-array>
+    <string-array name="trimesters">
+        <item>Trimester 1</item>
+        <item>Trimester 2</item>
+        <item>Trimester 3</item>
+    </string-array>
+    <string-array name="years">
+        <item>2024-2025</item>
+        <item>2025-2026</item>
+        <item>2026-2027</item>
+    </string-array>
+    <string-array name="lessons">
+        <item>Science Élémentaire et Technologie</item>
+        <item>Kinyarwanda</item>
+        <item>English</item>
+        <item>Social Studies and Religion</item>
+        <item>Mathématique</item>
+        <item>Français</item>
+    </string-array>
 
 
 </resources>

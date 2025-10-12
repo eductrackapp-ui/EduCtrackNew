@@ -87,10 +87,10 @@
         <activity android:name=".Activity.ActivityParentDashboard" android:exported="true" />
 
         <!-- Modules -->
-        <activity android:name=".Module.ReportsActivity" android:exported="true" />
-        <activity android:name=".Module.HomeworkActivity" android:exported="true" />
-        <activity android:name=".Module.StudentExamResultsActivity" android:exported="true" />
-        <activity android:name=".Module.AddCalculateScoresActivity" android:exported="true"/>
+        <activity android:name=".TrackModule.ParentsReportsActivity" android:exported="true" />
+        <activity android:name=".TrackModule.HomeworkActivity" android:exported="true" />
+        <activity android:name=".TrackModule.StudentExamResultsActivity" android:exported="true" />
+        <activity android:name=".TrackModule.AddCalculateScoresActivity" android:exported="true"/>
 
         <!-- New Activities -->
         <activity android:name=".Activity.SearchActivity" android:exported="true"

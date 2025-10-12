@@ -41,6 +41,19 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLoadResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="Load Results"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#5E17EB"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/ic_search"
+            app:iconGravity="textStart"
+            app:iconTint="#FFFFFF" />
+
         <!-- Table (horizontal scroll for many columns) -->
         <HorizontalScrollView
             android:layout_width="match_parent"

@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.equipe7.eductrack.Module.PerformanceFragment;
-import com.equipe7.eductrack.Module.ProgressFragment;
+import com.equipe7.eductrack.TrackModule.PerformanceFragment;
+import com.equipe7.eductrack.TrackModule.ProgressFragment;
 
 public class ParentPagerAdapter extends FragmentStateAdapter {
 

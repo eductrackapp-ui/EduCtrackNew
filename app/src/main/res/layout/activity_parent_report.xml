@@ -1,18 +1,230 @@
-<!-- res/layout/activity_report.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="#FFFFFF"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="12dp"
+    android:background="#F5F5F5">
 
-    <TextView
-        android:text="Report"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#5E17EB"
-        android:padding="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <include layout="@layout/bottom_nav_bar"/>
-</LinearLayout>
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvReportTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📘 Student Report by Lesson and Trimester"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5E17EB"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Student code -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilStudentCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxBackgroundMode="outline"
+            app:startIconDrawable="@drawable/ic_profile"
+            app:startIconTint="#5E17EB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etStudentCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Student Code (ex: EDF-P3-001)"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLoadResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="Load Results"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#5E17EB"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/ic_search"
+            app:iconGravity="textStart"
+            app:iconTint="#FFFFFF" />
+
+        <!-- Table (horizontal scroll for many columns) -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <TableLayout
+                android:id="@+id/tableLessons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#E0E0E0"
+                android:stretchColumns="1,2,3,4,5,6,7,8,9,10,11,12">
+
+                <!-- Header -->
+                <TableRow android:background="#5E17EB">
+                    <TextView android:text="Lesson" android:textColor="#FFFFFF" android:padding="6dp" android:textStyle="bold"/>
+                    <TextView android:text="Exercices T1" android:textColor="#FFFFFF" android:padding="6dp" android:textStyle="bold"/>
+                    <TextView android:text="Devoir T1" android:textColor="#FFFFFF" android:padding="6dp" android:textStyle="bold"/>
+                    <TextView android:text="Exam T1" android:textColor="#FFFFFF" android:padding="6dp" android:textStyle="bold"/>
+                    <TextView android:text="Total T1" android:textColor="#FFFFFF" android:padding="6dp" android:textStyle="bold"/>
+                    <TextView android:text="Exercices T2" android:textColor="#FFFFFF" android:padding="6dp" android:textStyle="bold"/>
+                    <TextView android:text="Devoir T2" android:textColor="#FFFFFF" android:padding="6dp" android:textStyle="bold"/>
+                    <TextView android:text="Exam T2" android:textColor="#FFFFFF" android:padding="6dp" android:textStyle="bold"/>
+                    <TextView android:text="Total T2" android:textColor="#FFFFFF" android:padding="6dp" android:textStyle="bold"/>
+                    <TextView android:text="Exercices T3" android:textColor="#FFFFFF" android:padding="6dp" android:textStyle="bold"/>
+                    <TextView android:text="Devoir T3" android:textColor="#FFFFFF" android:padding="6dp" android:textStyle="bold"/>
+                    <TextView android:text="Exam T3" android:textColor="#FFFFFF" android:padding="6dp" android:textStyle="bold"/>
+                    <TextView android:text="Total T3" android:textColor="#FFFFFF" android:padding="6dp" android:textStyle="bold"/>
+                </TableRow>
+
+                <!-- Mathematics -->
+                <TableRow>
+                    <TextView android:text="Mathematics" android:padding="6dp"/>
+                    <EditText android:id="@+id/etMathExercicesT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etMathDevT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etMathExamT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvMathTotalT1" android:text="--" android:padding="6dp"/>
+                    <EditText android:id="@+id/etMathExercicesT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etMathDevT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etMathExamT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvMathTotalT2" android:text="--" android:padding="6dp"/>
+                    <EditText android:id="@+id/etMathExercicesT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etMathDevT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etMathExamT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvMathTotalT3" android:text="--" android:padding="6dp"/>
+                </TableRow>
+
+                <!-- French -->
+                <TableRow>
+                    <TextView android:text="French" android:padding="6dp"/>
+                    <EditText android:id="@+id/etFrenchExercicesT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etFrenchDevT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etFrenchExamT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvFrenchTotalT1" android:text="--" android:padding="6dp"/>
+                    <EditText android:id="@+id/etFrenchExercicesT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etFrenchDevT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etFrenchExamT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvFrenchTotalT2" android:text="--" android:padding="6dp"/>
+                    <EditText android:id="@+id/etFrenchExercicesT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etFrenchDevT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etFrenchExamT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvFrenchTotalT3" android:text="--" android:padding="6dp"/>
+                </TableRow>
+
+                <!-- English -->
+                <TableRow>
+                    <TextView android:text="English" android:padding="6dp"/>
+                    <EditText android:id="@+id/etEnglishExercicesT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etEnglishDevT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etEnglishExamT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvEnglishTotalT1" android:text="--" android:padding="6dp"/>
+                    <EditText android:id="@+id/etEnglishExercicesT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etEnglishDevT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etEnglishExamT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvEnglishTotalT2" android:text="--" android:padding="6dp"/>
+                    <EditText android:id="@+id/etEnglishExercicesT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etEnglishDevT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etEnglishExamT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvEnglishTotalT3" android:text="--" android:padding="6dp"/>
+                </TableRow>
+
+                <!-- SET -->
+                <TableRow>
+                    <TextView android:text="SET" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSetExercicesT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSetDevT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSetExamT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvSetTotalT1" android:text="--" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSetExercicesT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSetDevT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSetExamT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvSetTotalT2" android:text="--" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSetExercicesT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSetDevT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSetExamT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvSetTotalT3" android:text="--" android:padding="6dp"/>
+                </TableRow>
+
+                <!-- Social Studies -->
+                <TableRow>
+                    <TextView android:text="Social Studies" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSocialExercicesT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSocialDevT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSocialExamT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvSocialTotalT1" android:text="--" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSocialExercicesT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSocialDevT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSocialExamT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvSocialTotalT2" android:text="--" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSocialExercicesT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSocialDevT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etSocialExamT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvSocialTotalT3" android:text="--" android:padding="6dp"/>
+                </TableRow>
+
+                <!-- Kinyarwanda -->
+                <TableRow>
+                    <TextView android:text="Kinyarwanda" android:padding="6dp"/>
+                    <EditText android:id="@+id/etKinyarwandaExercicesT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etKinyarwandaDevT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etKinyarwandaExamT1" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvKinyarwandaTotalT1" android:text="--" android:padding="6dp"/>
+                    <EditText android:id="@+id/etKinyarwandaExercicesT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etKinyarwandaDevT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etKinyarwandaExamT2" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvKinyarwandaTotalT2" android:text="--" android:padding="6dp"/>
+                    <EditText android:id="@+id/etKinyarwandaExercicesT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etKinyarwandaDevT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <EditText android:id="@+id/etKinyarwandaExamT3" android:hint="0" android:inputType="number" android:padding="6dp"/>
+                    <TextView android:id="@+id/tvKinyarwandaTotalT3" android:text="--" android:padding="6dp"/>
+                </TableRow>
+
+            </TableLayout>
+        </HorizontalScrollView>
+
+        <!-- Annual summary -->
+        <TextView
+            android:id="@+id/tvAnnualTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Annual Total: -- | Annual %: --%"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvVerdict"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verdict: --"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="8dp" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/progressChart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="8dp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update"
+            android:enabled="false"
+            app:backgroundTint="#5E17EB"
+            app:cornerRadius="8dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -77,6 +77,8 @@ dependencies {
     // ✅ Jetpack Compose (optionnel)
     implementation("androidx.compose.ui:ui-text-google-fonts:1.9.0")
     implementation(libs.ui.text)
+// ✅ PhilJay
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     // 🔹 Tests
     testImplementation(libs.junit)

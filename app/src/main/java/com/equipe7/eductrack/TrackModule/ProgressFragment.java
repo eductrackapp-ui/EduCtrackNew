@@ -1,4 +1,4 @@
-package com.equipe7.eductrack.Module;
+package com.equipe7.eductrack.TrackModule;
 
 import android.graphics.Color;
 import android.os.Bundle;

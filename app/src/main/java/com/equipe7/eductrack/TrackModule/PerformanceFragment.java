@@ -1,4 +1,4 @@
-package com.equipe7.eductrack.Module;
+package com.equipe7.eductrack.TrackModule;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.equipe7.eductrack.R;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Titre -->
+        <TextView
+            android:id="@+id/tvHomeworkTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📘 Student Assessment Entry"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5E17EB"
+            android:gravity="center"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Code élève -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilStudentCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxBackgroundMode="outline"
+            app:startIconDrawable="@drawable/ic_profile"
+            app:startIconTint="#5E17EB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etStudentCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Student Code (ex: EDF-P3-001)"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Type d'évaluation -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assessment Type"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinnerAssessmentType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:entries="@array/assessment_types" />
+
+        <!-- Semaine -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Week"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinnerWeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:entries="@array/weeks" />
+
+        <!-- Trimestre -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Trimester"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinnerTrimester"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:entries="@array/trimesters" />
+
+        <!-- Année académique -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Academic Year"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinnerYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:entries="@array/years" />
+
+        <!-- Matière / Leçon -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Lesson/Subject"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinnerLesson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:entries="@array/lessons" />
+
+        <!-- Titre de l'exercice -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilExerciseTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxBackgroundMode="outline"
+            app:startIconDrawable="@drawable/ic_assignment"
+            app:startIconTint="#5E17EB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etExerciseTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Exercise/Assessment Title"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Score obtenu -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilScore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxBackgroundMode="outline"
+            app:startIconDrawable="@drawable/ic_score"
+            app:startIconTint="#5E17EB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Score Obtained"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Bouton Sauvegarder -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveAndBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save and Return"
+            app:backgroundTint="#5E17EB"
+            android:textColor="#FFFFFF"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/ic_save"
+            app:iconTint="#FFFFFF"
+            app:iconGravity="textStart"
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
+</ScrollView>

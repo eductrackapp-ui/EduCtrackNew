@@ -7,10 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.equipe7.eductrack.Adapter.ParentPagerAdapter;
-import com.equipe7.eductrack.Module.StudentExamResultsActivity;
-import com.equipe7.eductrack.Module.HomeworkActivity;
-import com.equipe7.eductrack.Module.ReportsActivity;
-import com.equipe7.eductrack.Module.StudentExamResultsActivity;
+import com.equipe7.eductrack.TrackModule.StudentExamResultsActivity;
+import com.equipe7.eductrack.TrackModule.HomeworkActivity;
+import com.equipe7.eductrack.TrackModule.ParentsReportsActivity;
 import com.equipe7.eductrack.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -57,7 +56,7 @@ public class ActivityParentDashboard extends AppCompatActivity {
         });
 
         btnReport.setOnClickListener(v -> {
-            startActivity(new Intent(this, ReportsActivity.class));
+            startActivity(new Intent(this, ParentsReportsActivity.class));
             overridePendingTransition(0,0);
         });
     }
