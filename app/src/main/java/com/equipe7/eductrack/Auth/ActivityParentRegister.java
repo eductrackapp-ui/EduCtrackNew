@@ -119,64 +119,60 @@ public class ActivityParentRegister extends AppCompatActivity {
         String password = etPassword.getText().toString();
         String confirmPassword = etConfirmPassword.getText().toString();
 
-        // Validation complète
-        if (TextUtils.isEmpty(firstName)) { showToast("Please enter your first name"); return; }
-        if (TextUtils.isEmpty(lastName)) { showToast("Please enter your last name"); return; }
-        if (TextUtils.isEmpty(emailPhone)) { showToast("Please enter your email address"); return; }
-        if (!Patterns.EMAIL_ADDRESS.matcher(emailPhone).matches()) { showToast("Invalid email"); return; }
-        if (TextUtils.isEmpty(relation) || relation.equals("Select relationship")) { showToast("Please select relation"); return; }
-        if (TextUtils.isEmpty(school) || school.equals("Select school")) { showToast("Please select a school"); return; }
-        if (TextUtils.isEmpty(password)) { showToast("Enter password"); return; }
-        if (password.length() < 6) { showToast("Password must be at least 6 characters"); return; }
-        if (!password.equals(confirmPassword)) { showToast("Passwords do not match"); return; }
-        if (!cbTerms.isChecked() || !termsViewed) { showToast("Vous devez accepter et consulter les Terms of Use pour continuer"); return; }
+        // Additional validation for terms
+        if (!cbTerms.isChecked() || !termsViewed) { 
+            showToast("You must accept and review the Terms of Use to continue"); 
+            return; 
+        }
+        
+        if (!password.equals(confirmPassword)) { 
+            showToast("Passwords do not match"); 
+            return; 
+        }
 
-        // Firebase registration
-        firebaseManager.getAuth().fetchSignInMethodsForEmail(emailPhone)
-                .addOnSuccessListener(methodsResult -> {
-                    boolean exists = methodsResult.getSignInMethods() != null && !methodsResult.getSignInMethods().isEmpty();
-                    if (!exists) {
-                        firebaseManager.getAuth().createUserWithEmailAndPassword(emailPhone, password)
-                                .addOnCompleteListener(task -> {
-                                    if (task.isSuccessful()) {
-                                        FirebaseUser user = firebaseManager.getCurrentUser();
-                                        if (user == null) { showToast("Error: User not found after registration."); return; }
-                                        String userId = user.getUid();
+        // Prepare user data
+        Map<String, Object> parentData = new HashMap<>();
+        parentData.put("firstName", firstName);
+        parentData.put("lastName", lastName);
+        parentData.put("relation", relation);
+        parentData.put("school", school);
 
-                                        Map<String, Object> parentData = new HashMap<>();
-                                        parentData.put("firstName", firstName);
-                                        parentData.put("lastName", lastName);
-                                        parentData.put("email", emailPhone);
-                                        parentData.put("relation", relation);
-                                        parentData.put("school", school);
-                                        parentData.put("role", "parent");
+        // Use AuthenticationManager for registration
+        AuthenticationManager authManager = AuthenticationManager.getInstance(this);
+        
+        // Disable button to prevent multiple submissions
+        btnRegister.setEnabled(false);
+        
+        authManager.registerUser(
+            AuthenticationManager.UserType.PARENT, 
+            parentData, 
+            emailPhone, 
+            password, 
+            new AuthenticationManager.AuthCallback() {
+                @Override
+                public void onSuccess(String message, String userId) {
+                    showToast("Parent registered successfully!");
+                    
+                    // Navigate to student registration
+                    Intent intent = new Intent(ActivityParentRegister.this, ActivityStudentRegister.class);
+                    intent.putExtra("parentId", userId);
+                    startActivity(intent);
+                    finish();
+                }
 
-                                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                        db.collection("users").document(userId)
-                                                .set(parentData)
-                                                .addOnSuccessListener(aVoid -> {
-                                                    showToast("Parent registered successfully!");
-                                                    Intent intent = new Intent(ActivityParentRegister.this, ActivityStudentRegister.class);
-                                                    intent.putExtra("parentId", userId);
-                                                    startActivity(intent);
-                                                    finish();
-                                                })
-                                                .addOnFailureListener(e -> showToast("Firestore error: " + e.getMessage()));
+                @Override
+                public void onFailure(String error) {
+                    showToast(error);
+                    btnRegister.setEnabled(true); // Re-enable button
+                }
 
-                                    } else {
-                                        Throwable ex = task.getException();
-                                        if (ex instanceof FirebaseAuthUserCollisionException) {
-                                            showToast("Email already registered. Please log in or reset your password.");
-                                        } else {
-                                            showToast("Auth error: " + (ex != null ? ex.getMessage() : "Unknown error"));
-                                        }
-                                    }
-                                });
-                    } else {
-                        showToast("Email already registered. Please log in or reset your password.");
-                    }
-                })
-                .addOnFailureListener(e -> showToast("Auth check error: " + e.getMessage()));
+                @Override
+                public void onProgress(String message) {
+                    // You could show a progress dialog here
+                    showToast(message);
+                }
+            }
+        );
     }
 
     private void showToast(String msg) {

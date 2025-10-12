@@ -1,5 +1,6 @@
 package com.equipe7.eductrack.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,6 +69,7 @@ public class TeacherDashboard extends AppCompatActivity implements TeacherAdapte
         }
     }
 
+    @SuppressLint("WrongViewCast")
     private void initViews() {
         recyclerTeachers = findViewById(R.id.recyclerTeachers);
         btnCreateTeacher = findViewById(R.id.btnCreateTeacher);
@@ -116,6 +118,10 @@ public class TeacherDashboard extends AppCompatActivity implements TeacherAdapte
             showLoading(false);
             
             if (task.isSuccessful() && task.getResult() != null) {
+                // Initialize teacherList if null
+                if (teacherList == null) {
+                    teacherList = new ArrayList<>();
+                }
                 teacherList.clear();
                 
                 for (QueryDocumentSnapshot document : task.getResult()) {

@@ -58,11 +58,23 @@ public class ActivityStudentRegister extends AppCompatActivity {
         tvTerms = findViewById(R.id.tvTerms);
         btnRegister = findViewById(R.id.btnRegister);
 
-        ArrayAdapter<CharSequence> relationAdapter = ArrayAdapter.createFromResource(
-                this, R.array.parent_relations, android.R.layout.simple_spinner_item
-        );
-        relationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerRelation.setAdapter(relationAdapter);
+        // Setup relation spinner if it exists
+        if (spinnerRelation != null) {
+            ArrayAdapter<CharSequence> relationAdapter = ArrayAdapter.createFromResource(
+                    this, R.array.parent_relations, android.R.layout.simple_spinner_item
+            );
+            relationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerRelation.setAdapter(relationAdapter);
+        }
+        
+        // Setup school spinner if it exists
+        if (spinnerSchool != null) {
+            ArrayAdapter<CharSequence> schoolAdapter = ArrayAdapter.createFromResource(
+                    this, R.array.school_names, android.R.layout.simple_spinner_item
+            );
+            schoolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerSchool.setAdapter(schoolAdapter);
+        }
 
         tvTerms.setOnClickListener(v -> {
             Intent intent = new Intent(ActivityStudentRegister.this, TermsOfUseActivity.class);
@@ -78,32 +90,50 @@ public class ActivityStudentRegister extends AppCompatActivity {
         String relation = spinnerRelation.getSelectedItem() != null ? spinnerRelation.getSelectedItem().toString() : "";
         String school = spinnerSchool.getSelectedItem() != null ? spinnerSchool.getSelectedItem().toString() : "";
 
+        // Validation
         if (TextUtils.isEmpty(firstName)) { showToast("Enter student's first name"); return; }
         if (TextUtils.isEmpty(lastName)) { showToast("Enter student's last name"); return; }
         if (TextUtils.isEmpty(relation) || relation.equals("Select relationship")) { showToast("Select relation"); return; }
         if (TextUtils.isEmpty(school) || school.equals("Select school")) { showToast("Select school"); return; }
         if (!cbTerms.isChecked()) { showToast("You must accept the Conditions of Use"); return; }
 
-        String studentCode = generateStudentCode();
-
+        // Prepare student data
         Map<String, Object> studentData = new HashMap<>();
         studentData.put("firstName", firstName);
         studentData.put("lastName", lastName);
         studentData.put("relation", relation);
         studentData.put("school", school);
         studentData.put("parentId", parentId);
+        studentData.put("classLevel", "P1"); // Default class level, can be updated later
+
+        // Disable button to prevent multiple submissions
+        btnRegister.setEnabled(false);
+
+        // Since students don't have email/password, we'll create them directly in Firestore
+        // without Firebase Auth (they login through parent accounts)
+        String studentCode = generateStudentCode();
         studentData.put("studentCode", studentCode);
+        studentData.put("role", "student");
+        studentData.put("isActive", true);
+        studentData.put("createdAt", System.currentTimeMillis());
 
         db.collection("students")
                 .add(studentData)
                 .addOnSuccessListener((DocumentReference documentReference) -> {
                     showToast("Student registered with code: " + studentCode);
+                    
+                    // Navigate to parent home
                     Intent intent = new Intent(ActivityStudentRegister.this, ParentHomeActivity.class);
                     intent.putExtra("parentId", parentId);
+                    intent.putExtra("studentId", documentReference.getId());
+                    intent.putExtra("studentCode", studentCode);
                     startActivity(intent);
                     finish();
                 })
-                .addOnFailureListener(e -> showToast("Error: " + e.getMessage()));
+                .addOnFailureListener(e -> {
+                    showToast("Registration failed: " + e.getMessage());
+                    btnRegister.setEnabled(true); // Re-enable button
+                });
     }
 
     private String generateStudentCode() {

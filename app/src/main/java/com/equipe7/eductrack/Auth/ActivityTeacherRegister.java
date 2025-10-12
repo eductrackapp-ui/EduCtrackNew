@@ -2,6 +2,7 @@ package com.equipe7.eductrack.Auth;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.*;
 import androidx.annotation.Nullable;
@@ -117,11 +118,18 @@ public class ActivityTeacherRegister extends AppCompatActivity {
     private void callRoleAssignmentFunction(String uid) {
         Map<String, Object> payload = new HashMap<>();
         payload.put("uid", uid);
+        payload.put("role", "teacher");
 
-        functions.getHttpsCallable("assignTeacherRole")
+        functions.getHttpsCallable("assignUserRole")
                 .call(payload)
-                .addOnSuccessListener(result -> toast("Teacher role assigned"))
-                .addOnFailureListener(e -> toast("Role assignment failed: " + e.getMessage()));
+                .addOnSuccessListener(result -> {
+                    toast("Teacher role assigned successfully");
+                    Log.d("TeacherRegister", "Role assignment result: " + result.getData());
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("TeacherRegister", "Role assignment failed", e);
+                    toast("Role assignment failed: " + e.getMessage());
+                });
     }
 
     private String generateTeacherCode(String school, String classLevel) {

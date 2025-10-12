@@ -77,37 +77,43 @@ public class LoginActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Enter a valid email");
-            etEmail.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(password)) {
-            etPassword.setError("Enter your password");
-            etPassword.requestFocus();
-            return;
-        }
-
+        // Disable login button to prevent multiple submissions
+        btnLogin.setEnabled(false);
         isLoading = true;
         progressBar.setVisibility(ProgressBar.VISIBLE);
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    isLoading = false;
-                    progressBar.setVisibility(ProgressBar.GONE);
+        // Use AuthenticationManager for login
+        AuthenticationManager authManager = AuthenticationManager.getInstance(this);
+        
+        authManager.signInUser(email, password, new AuthenticationManager.AuthCallback() {
+            @Override
+            public void onSuccess(String message, String userId) {
+                isLoading = false;
+                progressBar.setVisibility(ProgressBar.GONE);
+                
+                // Navigate based on user role
+                navigateToUserHome(userId);
+            }
 
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        if (user != null) {
-                            checkUserRole(user.getUid());
-                        }
-                    } else {
-                        Toast.makeText(this,
-                                "Login failed: " + task.getException().getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
+            @Override
+            public void onFailure(String error) {
+                isLoading = false;
+                progressBar.setVisibility(ProgressBar.GONE);
+                btnLogin.setEnabled(true);
+                
+                Toast.makeText(LoginActivity.this, error, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onProgress(String message) {
+                // Progress is already shown via progressBar
+            }
+        });
+    }
+    
+    private void navigateToUserHome(String userId) {
+        // Check user role and navigate accordingly
+        checkUserRole(userId);
     }
 
     // --------------------------
