@@ -16,6 +16,9 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.equipe7.eductrack.R;
 import com.equipe7.eductrack.Adapter.CarouselAdapter;
+import com.equipe7.eductrack.TrackModule.ActivityAddReportTeacher;
+import com.equipe7.eductrack.TrackModule.ActivityAddScoresTeacher;
+import com.equipe7.eductrack.TrackModule.AddCalculateScoresActivity;
 import com.equipe7.eductrack.models.CarouselItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,7 +29,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class TeacherHomeActivity extends AppCompatActivity {
 
@@ -46,7 +48,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
     private EditText etSearch;
 
     // Boutons bas de navigation
-    private LinearLayout btnDashboard, btnHome, btnAllCourses, btnStudents;
+    private LinearLayout btnHome, btnAddCalculate, btnAddScoresReports, btnAddScoresTeacher;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -63,6 +65,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
         navProfile = findViewById(R.id.navProfile);
 
         badgeNotifications = findViewById(R.id.badgeNotifications);
+        badgeMessages = findViewById(R.id.badgeMessages);
         tvWelcome = findViewById(R.id.tvWelcome);
 
         combinedCarousel = findViewById(R.id.dashboardCarousel);
@@ -70,22 +73,17 @@ public class TeacherHomeActivity extends AppCompatActivity {
 
         etSearch = findViewById(R.id.etSearch);
 
-        // ✅ Initialisation des boutons existants
-        btnDashboard = findViewById(R.id.btnDashboard);
+        // Initialisation des boutons de la barre de navigation inférieure
         btnHome = findViewById(R.id.btnHome);
-        btnAllCourses = findViewById(R.id.btnAllCourses); // Nouveau bouton
-        btnStudents = findViewById(R.id.btnStudents);     // Nouveau bouton
+        btnAddCalculate = findViewById(R.id.btnAddCalculate);
+        btnAddScoresReports = findViewById(R.id.btnAddScoresReports);
+        btnAddScoresTeacher = findViewById(R.id.btnAddScoresTeacher);
 
         // Actions navigation haut
         navNotifications.setOnClickListener(v -> startActivity(new Intent(this, NotificationActivity.class)));
         navProfile.setOnClickListener(v -> startActivity(new Intent(this, ProfileActivity.class)));
 
-        // Actions barre bas
-        btnDashboard.setOnClickListener(v -> {
-            startActivity(new Intent(this, AdminCreateTeacherActivity.class));
-            overridePendingTransition(0, 0);
-        });
-
+        // Actions barre de navigation inférieure
         btnHome.setOnClickListener(v -> {
             Intent intent = new Intent(this, TeacherHomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -93,16 +91,19 @@ public class TeacherHomeActivity extends AppCompatActivity {
             finish();
         });
 
-        // ✅ Nouveau : All Courses → LessonsActivity
-        btnAllCourses.setOnClickListener(v -> {
-            startActivity(new Intent(this, LessonsActivity.class));
-            overridePendingTransition(0, 0);
+        btnAddCalculate.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AddCalculateScoresActivity.class);
+            startActivity(intent);
         });
 
-        // ✅ Nouveau : Students → StudentListActivity
-        btnStudents.setOnClickListener(v -> {
-            startActivity(new Intent(this, StudentListActivity.class));
-            overridePendingTransition(0, 0);
+        btnAddScoresReports.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ActivityAddReportTeacher.class);
+            startActivity(intent);
+        });
+
+        btnAddScoresTeacher.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ActivityAddScoresTeacher.class);
+            startActivity(intent);
         });
 
         // Setup fonctionnalités
