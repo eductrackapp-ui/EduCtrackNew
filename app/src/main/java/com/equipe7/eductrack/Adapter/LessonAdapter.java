@@ -13,24 +13,24 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.equipe7.eductrack.R;
-import com.equipe7.eductrack.Utils.Lesson;
+import com.equipe7.eductrack.Utils.LessonActivity;
 
 import java.util.List;
 
 public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonViewHolder> {
 
-    private final List<Lesson> lessonList;
+    private final List<LessonActivity> lessonList;
     private final Context context;
     private OnLessonActionListener actionListener;
 
     public interface OnLessonActionListener {
-        void onLessonClick(Lesson lesson);
-        void onEditLesson(Lesson lesson);
-        void onDeleteLesson(Lesson lesson);
-        void onViewDetails(Lesson lesson);
+        void onLessonClick(LessonActivity lesson);
+        void onEditLesson(LessonActivity lesson);
+        void onDeleteLesson(LessonActivity lesson);
+        void onViewDetails(LessonActivity lesson);
     }
 
-    public LessonAdapter(List<Lesson> lessonList, Context context) {
+    public LessonAdapter(List<LessonActivity> lessonList, Context context) {
         this.lessonList = lessonList;
         this.context = context;
     }
@@ -49,7 +49,7 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
 
     @Override
     public void onBindViewHolder(@NonNull LessonViewHolder holder, int position) {
-        Lesson lesson = lessonList.get(position);
+        LessonActivity lesson = lessonList.get(position);
 
         // Set lesson information
         holder.tvTitle.setText(lesson.getDisplayTitle());
@@ -159,7 +159,7 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
         return lessonList != null ? lessonList.size() : 0;
     }
 
-    public void updateLesson(int position, Lesson lesson) {
+    public void updateLesson(int position, LessonActivity lesson) {
         if (position >= 0 && position < lessonList.size()) {
             lessonList.set(position, lesson);
             notifyItemChanged(position);
@@ -173,7 +173,7 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
         }
     }
 
-    public void addLesson(Lesson lesson) {
+    public void addLesson(LessonActivity lesson) {
         lessonList.add(lesson);
         notifyItemInserted(lessonList.size() - 1);
     }

@@ -1,111 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="#F8F9FA"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F5F5F5"
-    android:padding="16dp">
+    tools:context=".Activity.StudentListActivity">
 
-    <!-- Header -->
-    <LinearLayout
+    <!-- Enhanced Header -->
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="16dp">
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#5E17EB">
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@android:drawable/ic_menu_info_details"
-            android:layout_marginEnd="8dp"
-            app:tint="#5E17EB" />
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Student Dashboard"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="#5E17EB" />
-    </LinearLayout>
-
-    <!-- Create Student Account Button -->
-    <Button
-        android:id="@+id/btnCreateStudent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create Student Account"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:backgroundTint="#5E17EB"
-        android:drawableStart="@android:drawable/ic_input_add"
-        android:drawablePadding="8dp"
-        android:padding="12dp"
-        android:layout_marginBottom="24dp" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/rounded_top_nav_bg"
-        android:orientation="horizontal"
-        android:paddingHorizontal="12dp"
-        android:gravity="center_vertical">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_search"
-            app:tint="#888888" />
-
-        <EditText
-            android:id="@+id/etSearchAdmin"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@null"
-            android:hint="students"
-            android:textColor="#333333"
-            android:textColorHint="#888888"
-            android:singleLine="true"
-            android:padding="0dp"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="20dp">
 
-    <!-- Online Students Section -->
-    <LinearLayout
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_attendance"
+                android:layout_marginEnd="12dp"
+                app:tint="#FFFFFF" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Student Management"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/tvStudentCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Loading students..."
+                    android:textSize="14sp"
+                    android:textColor="#E1BEE7"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:padding="4dp"
+                app:tint="#FFFFFF"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Search and Filter Section -->
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="8dp">
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="#FFFFFF">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@android:drawable/ic_menu_myplaces"
-            android:layout_marginEnd="8dp"
-            app:tint="#000000" />
-
-        <TextView
-            android:id="@+id/tvOnlineTitle"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Students by Class"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#000000" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    <!-- RecyclerView for student list -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerStudents"
+            <!-- Search Bar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/rounded_top_nav_bg"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_search"
+                    app:tint="#888888"
+                    android:layout_marginEnd="8dp" />
+
+                <EditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="Search students by name, class, or code..."
+                    android:background="@android:color/transparent"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text" />
+
+                <ImageView
+                    android:id="@+id/btnClearSearch"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    app:tint="#888888"
+                    android:visibility="gone"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <!-- Filter Chips -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filter by class:"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center_vertical" />
+
+                <HorizontalScrollView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/layoutClassFilters"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <!-- Class filter chips will be added programmatically -->
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Content Area with SwipeRefreshLayout -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#FFFFFF"
-        android:padding="8dp"
-        android:clipToPadding="false"
-        android:scrollbars="vertical" />
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Loading Indicator -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:indeterminateTint="#5E17EB" />
+
+            <!-- Students List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerStudents"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingHorizontal="8dp"
+                android:paddingBottom="16dp"
+                android:scrollbars="vertical" />
+
+            <!-- Empty State -->
+            <LinearLayout
+                android:id="@+id/layoutEmptyState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/ic_attendance"
+                    android:alpha="0.3"
+                    app:tint="#CCCCCC" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No Students Found"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#666666"
+                    android:layout_marginTop="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Try adjusting your search or filters"
+                    android:textSize="14sp"
+                    android:textColor="#999999"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <!-- Floating Action Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="#5E17EB"
+        app:tint="#FFFFFF" />
 
 </LinearLayout>

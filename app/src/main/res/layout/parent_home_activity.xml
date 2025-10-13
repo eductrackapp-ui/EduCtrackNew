@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- Contenu principal -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,45 +12,42 @@
         android:fillViewport="true">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Header -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp">
 
-                <!-- Logo + Texte -->
                 <LinearLayout
                     android:id="@+id/logoContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/imgLogo"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:src="@drawable/logo"
-                        android:contentDescription="App Logo" />
+                        android:contentDescription="App Logo"
+                        android:src="@drawable/logo" />
 
                     <TextView
-                        android:id="@+id/tvWelcome"
+                            android:id="@+id/tvWelcome"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
+                        android:fontFamily="@font/poppins"
                         android:text="EducTrack"
                         android:textColor="#333333"
                         android:textSize="22sp"
-                        android:fontFamily="@font/poppins"
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <!-- Icônes avec badges -->
                 <LinearLayout
                     android:id="@+id/iconsContainer"
                     android:layout_width="wrap_content"
@@ -60,9 +56,6 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <!-- Recherche -->
-
-                    <!-- Notifications -->
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -88,7 +81,6 @@
                             android:visibility="gone" />
                     </RelativeLayout>
 
-                    <!-- Messages -->
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -108,7 +100,6 @@
                             android:visibility="gone" />
                     </RelativeLayout>
 
-                    <!-- Profil -->
                     <ImageView
                         android:id="@+id/navProfile"
                         android:layout_width="24dp"
@@ -118,21 +109,19 @@
                 </LinearLayout>
             </RelativeLayout>
 
-            <!-- Ligne de séparation -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#DDDDDD"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="12dp"
+                android:background="#DDDDDD" />
 
-            <!-- Champ de recherche -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/rounded_top_nav_bg"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="12dp"
-                android:gravity="center_vertical">
+                android:paddingHorizontal="12dp">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -147,15 +136,14 @@
                     android:layout_marginStart="8dp"
                     android:background="@null"
                     android:hint="Search here..."
-                    android:textColor="#333333"
-                    android:textColorHint="#888888"
-                    android:singleLine="true"
                     android:imeOptions="actionSearch"
                     android:inputType="text"
-                    android:padding="0dp"/>
+                    android:padding="0dp"
+                    android:singleLine="true"
+                    android:textColor="#333333"
+                    android:textColorHint="#888888" />
             </LinearLayout>
 
-            <!-- Titre principal -->
             <TextView
                 android:id="@+id/textTitle"
                 android:layout_width="match_parent"
@@ -175,7 +163,6 @@
                 android:textColor="#333333"
                 android:textSize="14sp" />
 
-            <!-- Dashboard Carousel -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="207dp"
@@ -186,7 +173,7 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/dashboardCarousel"
                     android:layout_width="match_parent"
-                    android:layout_height="207dp" />
+                    android:layout_height="match_parent" />
             </androidx.cardview.widget.CardView>
 
             <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
@@ -198,12 +185,9 @@
                 app:dotsSize="6dp"
                 app:dotsSpacing="4dp" />
 
-
-
-            <!-- Top Search Section -->
             <LinearLayout
                 android:id="@+id/topSearchSection"
-                android:layout_width="411dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
@@ -218,23 +202,23 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
-                    android:layout_width="414dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
+                    android:orientation="horizontal">
 
-
-                    <!-- All Courses -->
                     <LinearLayout
-                        android:layout_width="135dp"
+                        android:id="@+id/btnAllCourses"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="6dp"
                         android:layout_weight="1"
                         android:background="@drawable/rounded_top_nav_bg"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="4dp">
+                        android:padding="4dp"
+                        android:clickable="true"
+                        android:focusable="true">
 
                         <ImageView
                             android:layout_width="24dp"
@@ -251,16 +235,18 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <!-- Students -->
                     <LinearLayout
-                        android:layout_width="151dp"
+                        android:id="@+id/btnStudents"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="6dp"
                         android:layout_weight="1"
                         android:background="@drawable/rounded_top_nav_bg"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="4dp">
+                        android:padding="4dp"
+                        android:clickable="true"
+                        android:focusable="true">
 
                         <ImageView
                             android:layout_width="24dp"
@@ -281,61 +267,77 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Barre de navigation arrondie -->
     <LinearLayout
         android:id="@+id/bottom_nav_bar"
-        android:layout_width="284dp"
-        android:layout_height="65dp"
-        android:layout_alignParentEnd="true"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="74dp"
-        android:layout_marginBottom="21dp"
         android:background="@drawable/bg_bottom_nav"
         android:elevation="12dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingHorizontal="8dp"
-        android:paddingVertical="4dp"
-        android:weightSum="5">
+        android:paddingVertical="4dp">
 
-        <!-- dashbord -->
         <LinearLayout
-            android:id="@+id/btnDashboard"
+            android:id="@+id/btnExams"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="58dp"
-                android:layout_height="40dp"
-                android:src="@drawable/dashbord" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/examen" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dashboard"
+                android:text="Exams"
                 android:textColor="#000000"
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <!-- Homework -->
+        <LinearLayout
+            android:id="@+id/btnHomework"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <!-- Home -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/devoir" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Homework"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/btnHome"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="54dp"
-                android:layout_height="39dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/home" />
 
             <TextView
@@ -346,7 +348,50 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/btnReport"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/rapport" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Report"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnExercise"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/exercices" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Exercise"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>

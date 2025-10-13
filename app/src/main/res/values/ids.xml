@@ -4,4 +4,5 @@
     <item name="textTitle" type="id" />
     <item name="item_ca" type="id" />
     <item name="imgCarousel" type="id" />
+    <item name="tvClassSubject" type="id" />
 </resources>

@@ -108,11 +108,11 @@ public class AdminHomeActivity extends AppCompatActivity {
         // Cards Click Listeners
         // --------------------------
         btnTeachers.setOnClickListener(v ->
-                startActivity(new Intent(this, TeacherDashboard.class))
+                startActivity(new Intent(this, AdminCreateTeacherActivity.class))
         );
 
         btnStudents.setOnClickListener(v ->
-                startActivity(new Intent(this, StudentDashboardActivity.class))
+                startActivity(new Intent(this, AdminStudentDashboardActivity.class))
         );
 
         btnAnalytics.setOnClickListener(v ->

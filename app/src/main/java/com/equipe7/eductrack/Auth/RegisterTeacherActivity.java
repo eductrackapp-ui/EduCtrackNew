@@ -8,13 +8,13 @@ import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.equipe7.eductrack.Activity.TeacherDashboard;
-import com.equipe7.eductrack.Auth.TermsOfUseActivity;
+import com.equipe7.eductrack.Activity.AdminTeacherListActivity;
 import com.equipe7.eductrack.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,52 +70,79 @@ public class RegisterTeacherActivity extends AppCompatActivity {
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
 
-        String gender = spinnerGender.getSelectedItem() != null ? spinnerGender.getSelectedItem().toString() : "";
-        String school = spinnerSchool.getSelectedItem() != null ? spinnerSchool.getSelectedItem().toString() : "";
-        String classLevel = spinnerClass.getSelectedItem() != null ? spinnerClass.getSelectedItem().toString() : "";
-        String position = spinnerPosition.getSelectedItem() != null ? spinnerPosition.getSelectedItem().toString() : "";
+        String gender = getSpinnerValue(spinnerGender);
+        String school = getSpinnerValue(spinnerSchool);
+        String classLevel = getSpinnerValue(spinnerClass);
+        String position = getSpinnerValue(spinnerPosition);
 
         // ✅ validations
-        if (TextUtils.isEmpty(firstName)) { showToast("Enter first name"); return; }
-        if (TextUtils.isEmpty(lastName)) { showToast("Enter last name"); return; }
-        if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) { showToast("Enter valid email"); return; }
-        if (TextUtils.isEmpty(password) || password.length() < 6) { showToast("Password must be at least 6 characters"); return; }
-        if (!password.equals(confirmPassword)) { showToast("Passwords do not match"); return; }
-        if (TextUtils.isEmpty(gender) || gender.equals("Select gender")) { showToast("Select gender"); return; }
-        if (TextUtils.isEmpty(school) || school.equals("Select school")) { showToast("Select school"); return; }
-        if (TextUtils.isEmpty(classLevel) || classLevel.equals("Select class")) { showToast("Select class"); return; }
-        if (TextUtils.isEmpty(position) || position.equals("Select role")) { showToast("Select position"); return; }
-        if (!cbConfidentiality.isChecked()) { showToast("You must accept the Confidentiality Policy"); return; }
+        if (!validateInputs(firstName, lastName, email, password, confirmPassword, gender, school, classLevel, position)) {
+            return;
+        }
 
         // ✅ création compte Firebase Auth
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener(authResult -> {
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    if (user != null) {
-                        String uid = user.getUid();
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            String uid = user.getUid();
 
-                        Map<String, Object> teacherData = new HashMap<>();
-                        teacherData.put("firstName", firstName);
-                        teacherData.put("lastName", lastName);
-                        teacherData.put("email", email);
-                        teacherData.put("gender", gender);
-                        teacherData.put("school", school);
-                        teacherData.put("classLevel", classLevel);
-                        teacherData.put("position", position);
-                        teacherData.put("uid", uid);
+                            // Données teacher
+                            Map<String, Object> teacherData = new HashMap<>();
+                            teacherData.put("firstName", firstName);
+                            teacherData.put("lastName", lastName);
+                            teacherData.put("email", email);
+                            teacherData.put("gender", gender);
+                            teacherData.put("school", school);
+                            teacherData.put("classLevel", classLevel);
+                            teacherData.put("position", position);
+                            teacherData.put("uid", uid);
+                            teacherData.put("role", "teacher"); // ✅ rôle ajouté ici
 
-                        Map<String, Object> userData = new HashMap<>();
-                        userData.put("role", "teacher");
+                            // Données user
+                            Map<String, Object> userData = new HashMap<>();
+                            userData.put("role", "teacher");
 
-                        db.collection("teachers").document(uid).set(teacherData);
-                        db.collection("users").document(uid).set(userData);
+                            // ✅ Batch pour écrire les deux documents ensemble
+                            WriteBatch batch = db.batch();
+                            batch.set(db.collection("teachers").document(uid), teacherData);
+                            batch.set(db.collection("users").document(uid), userData);
 
-                        showToast("Teacher account created");
-                        startActivity(new Intent(this, TeacherDashboard.class));
-                        finish();
+                            batch.commit()
+                                    .addOnSuccessListener(aVoid -> {
+                                        showToast("Teacher account created successfully");
+                                        startActivity(new Intent(this, AdminTeacherListActivity.class));
+                                        finish();
+                                    })
+                                    .addOnFailureListener(e -> showToast("Firestore error: " + e.getMessage()));
+                        }
+                    } else {
+                        showToast("Auth error: " + task.getException().getMessage());
                     }
-                })
-                .addOnFailureListener(e -> showToast("Error: " + e.getMessage()));
+                });
+    }
+
+    private boolean validateInputs(String firstName, String lastName, String email, String password,
+                                   String confirmPassword, String gender, String school,
+                                   String classLevel, String position) {
+
+        if (TextUtils.isEmpty(firstName)) { showToast("Enter first name"); return false; }
+        if (TextUtils.isEmpty(lastName)) { showToast("Enter last name"); return false; }
+        if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) { showToast("Enter valid email"); return false; }
+        if (TextUtils.isEmpty(password) || password.length() < 6) { showToast("Password must be at least 6 characters"); return false; }
+        if (!password.equals(confirmPassword)) { showToast("Passwords do not match"); return false; }
+        if (TextUtils.isEmpty(gender) || gender.equals("Select gender")) { showToast("Select gender"); return false; }
+        if (TextUtils.isEmpty(school) || school.equals("Select school")) { showToast("Select school"); return false; }
+        if (TextUtils.isEmpty(classLevel) || classLevel.equals("Select class")) { showToast("Select class"); return false; }
+        if (TextUtils.isEmpty(position) || position.equals("Select role")) { showToast("Select position"); return false; }
+        if (!cbConfidentiality.isChecked()) { showToast("You must accept the Confidentiality Policy"); return false; }
+
+        return true;
+    }
+
+    private String getSpinnerValue(Spinner spinner) {
+        return spinner.getSelectedItem() != null ? spinner.getSelectedItem().toString() : "";
     }
 
     private void showToast(String msg) {

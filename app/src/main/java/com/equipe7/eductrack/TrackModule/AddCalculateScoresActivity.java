@@ -49,28 +49,22 @@ public class AddCalculateScoresActivity extends AppCompatActivity {
         tableScores = findViewById(R.id.tableScores);
         tvPeriodResults = findViewById(R.id.tvPeriodResults);
 
-        btnLoadScores.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String studentCode = etStudentCode.getText().toString().trim();
-                if (TextUtils.isEmpty(studentCode)) {
-                    Toast.makeText(AddCalculateScoresActivity.this, "Enter student code", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                loadStudentScores(studentCode);
+        btnLoadScores.setOnClickListener(v -> {
+            String studentCode = etStudentCode.getText().toString().trim();
+            if (TextUtils.isEmpty(studentCode)) {
+                Toast.makeText(this, "Enter student code", Toast.LENGTH_SHORT).show();
+                return;
             }
+            loadStudentScores(studentCode);
         });
 
-        btnPostScores.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String studentCode = etStudentCode.getText().toString().trim();
-                if (TextUtils.isEmpty(studentCode)) {
-                    Toast.makeText(AddCalculateScoresActivity.this, "Enter student code", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                postScoresToFirestore(studentCode);
+        btnPostScores.setOnClickListener(v -> {
+            String studentCode = etStudentCode.getText().toString().trim();
+            if (TextUtils.isEmpty(studentCode)) {
+                Toast.makeText(this, "Enter student code", Toast.LENGTH_SHORT).show();
+                return;
             }
+            postScoresToFirestore(studentCode);
         });
     }
 
@@ -94,58 +88,48 @@ public class AddCalculateScoresActivity extends AppCompatActivity {
 
         // Charger homework
         DocumentReference homeworkRef = db.collection("homework").document(studentCode);
-        homeworkRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshotHomework, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Toast.makeText(AddCalculateScoresActivity.this, "Error loading homework: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        homeworkRef.addSnapshotListener((snapshotHomework, e) -> {
+            if (e != null) {
+                Toast.makeText(this, "Error loading homework: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Map<String, Object> homeworkData = snapshotHomework != null && snapshotHomework.exists() ? snapshotHomework.getData() : new HashMap<>();
+
+            // Charger exercises
+            DocumentReference exerciseRef = db.collection("exercises").document(studentCode);
+            exerciseRef.addSnapshotListener((snapshotExercise, e1) -> {
+                if (e1 != null) {
+                    Toast.makeText(this, "Error loading exercises: " + e1.getMessage(), Toast.LENGTH_SHORT).show();
                     return;
                 }
+                Map<String, Object> exerciseData = snapshotExercise != null && snapshotExercise.exists() ? snapshotExercise.getData() : new HashMap<>();
 
-                Map<String, Object> homeworkData = snapshotHomework != null && snapshotHomework.exists() ? snapshotHomework.getData() : new HashMap<>();
-
-                // Charger exercises
-                DocumentReference exerciseRef = db.collection("exercises").document(studentCode);
-                exerciseRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot snapshotExercise, @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Toast.makeText(AddCalculateScoresActivity.this, "Error loading exercises: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        Map<String, Object> exerciseData = snapshotExercise != null && snapshotExercise.exists() ? snapshotExercise.getData() : new HashMap<>();
-
-                        // Charger exams
-                        DocumentReference examRef = db.collection("exams").document(studentCode);
-                        examRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable DocumentSnapshot snapshotExam, @Nullable FirebaseFirestoreException e) {
-                                if (e != null) {
-                                    Toast.makeText(AddCalculateScoresActivity.this, "Error loading exams: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-
-                                Map<String, Object> examData = snapshotExam != null && snapshotExam.exists() ? snapshotExam.getData() : new HashMap<>();
-
-                                populateScoreTable(homeworkData, exerciseData, examData);
-                            }
-                        });
+                // Charger exams
+                DocumentReference examRef = db.collection("exams").document(studentCode);
+                examRef.addSnapshotListener((snapshotExam, e2) -> {
+                    if (e2 != null) {
+                        Toast.makeText(this, "Error loading exams: " + e2.getMessage(), Toast.LENGTH_SHORT).show();
+                        return;
                     }
+                    Map<String, Object> examData = snapshotExam != null && snapshotExam.exists() ? snapshotExam.getData() : new HashMap<>();
+                    populateScoreTable(homeworkData, exerciseData, examData);
                 });
-            }
+            });
         });
     }
 
+    @SuppressWarnings("unchecked")
     private void populateScoreTable(Map<String, Object> homework, Map<String, Object> exercises, Map<String, Object> exams) {
-        tableScores.removeViews(1, tableScores.getChildCount() - 1);
+        if (tableScores.getChildCount() > 1) {
+            tableScores.removeViews(1, tableScores.getChildCount() - 1);
+        }
 
         for (int week = 1; week <= 6; week++) {
             String weekKey = "week" + week;
 
-            Map<String, Object> hwWeek = (Map<String, Object>) homework.get(weekKey);
-            Map<String, Object> exWeek = (Map<String, Object>) exercises.get(weekKey);
-            Map<String, Object> examWeek = (Map<String, Object>) exams.get(weekKey);
+            Map<String, Object> hwWeek = homework.get(weekKey) instanceof Map ? (Map<String, Object>) homework.get(weekKey) : null;
+            Map<String, Object> exWeek = exercises.get(weekKey) instanceof Map ? (Map<String, Object>) exercises.get(weekKey) : null;
+            Map<String, Object> examWeek = exams.get(weekKey) instanceof Map ? (Map<String, Object>) exams.get(weekKey) : null;
 
             if (hwWeek == null && exWeek == null && examWeek == null) continue;
 
@@ -165,9 +149,9 @@ public class AddCalculateScoresActivity extends AppCompatActivity {
                 tvSubject.setPadding(6, 6, 6, 6);
                 row.addView(tvSubject);
 
-                double hwScore = hwWeek != null && hwWeek.get(subject) != null ? Double.parseDouble(hwWeek.get(subject).toString()) : 0.0;
-                double exScore = exWeek != null && exWeek.get(subject) != null ? Double.parseDouble(exWeek.get(subject).toString()) : 0.0;
-                double examScore = examWeek != null && examWeek.get(subject) != null ? Double.parseDouble(examWeek.get(subject).toString()) : 0.0;
+                double hwScore = hwWeek != null && hwWeek.get(subject) != null ? toDouble(hwWeek.get(subject)) : 0.0;
+                double exScore = exWeek != null && exWeek.get(subject) != null ? toDouble(exWeek.get(subject)) : 0.0;
+                double examScore = examWeek != null && examWeek.get(subject) != null ? toDouble(examWeek.get(subject)) : 0.0;
 
                 TextView tvHW = new TextView(this);
                 tvHW.setText(String.valueOf(hwScore));
@@ -207,6 +191,17 @@ public class AddCalculateScoresActivity extends AppCompatActivity {
         tvPeriodResults.setText(periodSummary.toString());
     }
 
+    private double toDouble(Object value) {
+        if (value instanceof Number) {
+            return ((Number) value).doubleValue();
+        }
+        try {
+            return Double.parseDouble(value.toString());
+        } catch (Exception e) {
+            return 0.0;
+        }
+    }
+
     private void postScoresToFirestore(String studentCode) {
         Map<String, Object> scoreData = new HashMap<>();
         scoreData.put("totalPerSubject", totalPerSubject);
@@ -214,7 +209,7 @@ public class AddCalculateScoresActivity extends AppCompatActivity {
 
         db.collection("student_scores").document(studentCode)
                 .set(scoreData)
-                .addOnSuccessListener(aVoid -> Toast.makeText(AddCalculateScoresActivity.this, "Scores posted successfully", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(AddCalculateScoresActivity.this, "Failed to post scores: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Scores posted successfully", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(this, "Failed to post scores: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }

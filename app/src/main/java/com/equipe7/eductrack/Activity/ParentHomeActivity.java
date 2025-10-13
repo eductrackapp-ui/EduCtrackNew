@@ -1,194 +1,145 @@
 package com.equipe7.eductrack.Activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.view.View;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.equipe7.eductrack.R;
-import com.equipe7.eductrack.Adapter.CarouselAdapter;
-import com.equipe7.eductrack.models.CarouselItem;
+import com.equipe7.eductrack.TrackModule.HomeworkActivity;
+import com.equipe7.eductrack.TrackModule.StudentExercisesActivity;
+import com.equipe7.eductrack.Activity.LessonsActivity;
+import com.equipe7.eductrack.TrackModule.ParentsReportsActivity;
+import com.equipe7.eductrack.Activity.StudentListActivity;
+import com.equipe7.eductrack.TrackModule.StudentExamResultsActivity;
+import com.equipe7.eductrack.Activity.NotificationActivity;
+import com.equipe7.eductrack.Activity.SearchResultActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ParentHomeActivity extends AppCompatActivity {
 
-    // Navigation (haut)
-    private View navNotifications, navProfile, navMessages;
-    private TextView badgeMessages, badgeNotifications, tvWelcome;
+    public static class SearchableItem {
+        public String type;
+        public String name;
+        public String code;
+        public String className;
 
-    // Firebase
-    private FirebaseFirestore db;
-    private FirebaseAuth mAuth;
+        public SearchableItem() {} // Nécessaire pour Firebase
 
-    // Carousel
-    private ViewPager2 combinedCarousel;
-    private WormDotsIndicator combinedIndicator;
+        public SearchableItem(String type, String name, String code, String className) {
+            this.type = type;
+            this.name = name;
+            this.code = code;
+            this.className = className;
+        }
+    }
 
-    // Barre de recherche
-    private EditText etSearch;
+    private List<SearchableItem> database = new ArrayList<>();
+    private DatabaseReference dbRef;
+    private TextView tvWelcome;
 
-    // Boutons bas de navigation
-    private LinearLayout btnDashboard, btnHome;
-
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parent_home_activity);
 
-        // Firebase init
-        db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-
-        // Liens XML
-        navNotifications = findViewById(R.id.navNotifications);
-        navProfile = findViewById(R.id.navProfile);
-        navMessages = findViewById(R.id.navMessages);
-
-        badgeMessages = findViewById(R.id.badgeMessages);
-        badgeNotifications = findViewById(R.id.badgeNotifications);
         tvWelcome = findViewById(R.id.tvWelcome);
 
-        combinedCarousel = findViewById(R.id.dashboardCarousel);
-        combinedIndicator = findViewById(R.id.dashboardIndicator);
+        // Affiche le nom de l'utilisateur connecté
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
+            dbRef = FirebaseDatabase.getInstance().getReference("users").child(uid);
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String name = snapshot.child("name").getValue(String.class);
+                    if (name != null && !name.isEmpty()) {
+                        tvWelcome.setText("Bienvenue, " + name);
+                    } else {
+                        tvWelcome.setText("Bienvenue !");
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    tvWelcome.setText("Bienvenue !");
+                }
+            });
+        } else {
+            tvWelcome.setText("Bienvenue !");
+        }
 
-        etSearch = findViewById(R.id.etSearch);
+        // Barre de navigation du bas
+        findViewById(R.id.btnExams).setOnClickListener(v -> startActivity(new Intent(this, StudentExamResultsActivity.class)));
+        findViewById(R.id.btnHomework).setOnClickListener(v -> startActivity(new Intent(this, HomeworkActivity.class)));
+        findViewById(R.id.btnReport).setOnClickListener(v -> startActivity(new Intent(this, ParentsReportsActivity.class)));
+        findViewById(R.id.btnExercise).setOnClickListener(v -> startActivity(new Intent(this, StudentExercisesActivity.class)));
+        findViewById(R.id.btnHome).setOnClickListener(v -> startActivity(new Intent(this, ParentHomeActivity.class)));
 
-        // ✅ Initialisation des boutons existants
-        btnDashboard = findViewById(R.id.btnDashboard); // Exams
-        btnHome = findViewById(R.id.btnHome);           // Home
+        // Boutons "ALL COURSES" et "Students"
+        findViewById(R.id.btnAllCourses).setOnClickListener(v -> startActivity(new Intent(this, LessonsActivity.class)));
+        findViewById(R.id.btnStudents).setOnClickListener(v -> startActivity(new Intent(this, StudentListActivity.class)));
 
-        // Actions navigation haut
+        // Bouton notifications
+        ImageView navNotifications = findViewById(R.id.navNotifications);
         navNotifications.setOnClickListener(v -> startActivity(new Intent(this, NotificationActivity.class)));
-        navProfile.setOnClickListener(v -> startActivity(new Intent(this, ProfileActivity.class)));
-
-        // Actions barre bas
-        btnDashboard.setOnClickListener(v -> {
-            startActivity(new Intent(this, ActivityParentDashboard.class));
-            overridePendingTransition(0, 0);
-        });
-
-        btnHome.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ParentHomeActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        });
-
-        // Setup fonctionnalités
-        listenForNotifications();
-        listenForMessages();
-        animateWelcomeText();
-        setupCombinedCarousel();
 
         // Barre de recherche
-        etSearch.setOnEditorActionListener(this::onEditorAction);
+        EditText etSearch = findViewById(R.id.etSearch);
+        etSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String query = etSearch.getText().toString().trim();
+                searchInFirebase(query);
+                return true;
+            }
+            return false;
+        });
+
+        // Charger les données de recherche depuis Firebase
+        loadDatabaseFromFirebase();
     }
 
-    // 🔔 Notifications
-    private void listenForNotifications() {
-        if (mAuth.getCurrentUser() == null) return;
-        String userId = mAuth.getCurrentUser().getUid();
-        db.collection("notifications")
-                .whereEqualTo("receiverId", userId)
-                .whereEqualTo("isRead", false)
-                .addSnapshotListener((value, error) -> {
-                    if (error != null || value == null) return;
-                    int count = value.size();
-                    if (count > 0) {
-                        badgeNotifications.setText(String.valueOf(count));
-                        badgeNotifications.setVisibility(View.VISIBLE);
-                    } else {
-                        badgeNotifications.setVisibility(View.GONE);
-                    }
-                });
+    // Recherche universelle dans Firebase
+    private void searchInFirebase(String query) {
+        String lowerQuery = query.toLowerCase();
+        List<SearchableItem> results = new ArrayList<>();
+        for (SearchableItem item : database) {
+            if ((item.name != null && item.name.toLowerCase().contains(lowerQuery)) ||
+                    (item.code != null && item.code.toLowerCase().contains(lowerQuery)) ||
+                    (item.className != null && item.className.toLowerCase().contains(lowerQuery))) {
+                results.add(item);
+            }
+        }
+        // Passe les résultats à l'activité de résultats
+        Intent intent = new Intent(this, SearchResultActivity.class);
+        intent.putExtra("search_query", query);
+        SearchResultActivity.results = results; // exemple simple
+        startActivity(intent);
     }
 
-    // 📩 Messages
-    private void listenForMessages() {
-        if (mAuth.getCurrentUser() == null) return;
-        String userId = mAuth.getCurrentUser().getUid();
-        db.collection("messages")
-                .whereEqualTo("receiverId", userId)
-                .whereEqualTo("isRead", false)
-                .addSnapshotListener((value, error) -> {
-                    if (error != null || value == null) return;
-                    int count = value.size();
-                    if (count > 0) {
-                        badgeMessages.setText(String.valueOf(count));
-                        badgeMessages.setVisibility(View.VISIBLE);
-                    } else {
-                        badgeMessages.setVisibility(View.GONE);
-                    }
-                });
-    }
-
-    // ✨ Animation du texte de bienvenue
-    private void animateWelcomeText() {
-        tvWelcome.setVisibility(View.VISIBLE);
-        Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setDuration(1500);
-        tvWelcome.startAnimation(fadeIn);
-    }
-
-    // 🎠 Carousel
-    private void setupCombinedCarousel() {
-        List<CarouselItem> combinedItems = new ArrayList<>();
-
-        combinedItems.add(new CarouselItem(R.drawable.bebe_eleve, "Welcome", "Learning Together"));
-        combinedItems.add(new CarouselItem(R.drawable.mission_image, "Our Mission", "Educate & Inspire"));
-        combinedItems.add(new CarouselItem(R.drawable.eleve, "Students", "Motivation & Success"));
-        combinedItems.add(new CarouselItem(R.drawable.eleve_png, "Education", "For Everyone"));
-        combinedItems.add(new CarouselItem(R.drawable.groupe_eleve_deux, "Teamwork", "Together is Better"));
-        combinedItems.add(new CarouselItem(R.drawable.c_eleve, "Trust", "Support & Respect"));
-        combinedItems.add(new CarouselItem(R.drawable.charte, "Charter", "Values & Discipline"));
-        combinedItems.add(new CarouselItem(R.drawable.c_ejeux, "Educational Games", "Learning Through Play"));
-
-        CarouselAdapter adapter = new CarouselAdapter(combinedItems);
-        combinedCarousel.setAdapter(adapter);
-        combinedIndicator.setViewPager2(combinedCarousel);
-
-        autoSlideCarousel(combinedCarousel, combinedItems.size());
-    }
-
-    // ⏳ Auto slide
-    private void autoSlideCarousel(ViewPager2 carousel, int itemCount) {
-        final int delay = 5000; // 5s
-        carousel.postDelayed(new Runnable() {
-            int index = 0;
+    // Charger les données de recherche depuis Firebase
+    private void loadDatabaseFromFirebase() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("searchable_items");
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void run() {
-                if (itemCount > 0) {
-                    index = (index + 1) % itemCount;
-                    carousel.setCurrentItem(index, true);
-                    carousel.postDelayed(this, delay);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                database.clear();
+                for (DataSnapshot itemSnap : snapshot.getChildren()) {
+                    SearchableItem item = itemSnap.getValue(SearchableItem.class);
+                    if (item != null) database.add(item);
                 }
             }
-        }, delay);
-    }
-
-    // 🔍 Recherche
-    private boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        String query = etSearch.getText().toString().trim();
-        if (!query.isEmpty()) {
-            Intent i = new Intent(this, SearchActivity.class);
-            i.putExtra("query", query);
-            startActivity(i);
-        }
-        return true;
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        });
     }
 }

@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -83,7 +82,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
 
         // Actions barre bas
         btnDashboard.setOnClickListener(v -> {
-            startActivity(new Intent(this, TeacherDashboard.class));
+            startActivity(new Intent(this, AdminCreateTeacherActivity.class));
             overridePendingTransition(0, 0);
         });
 

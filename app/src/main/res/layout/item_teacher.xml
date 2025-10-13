@@ -50,14 +50,34 @@
                 android:textColor="#1A1A1A"
                 android:fontFamily="sans-serif-medium" />
 
-            <!-- Class and Subject -->
+            <!-- Teacher Role -->
             <TextView
-                android:id="@+id/tvClassSubject"
+                android:id="@+id/tvRole"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="P4 - Mathematics"
+                android:text="Role: Head Teacher"
                 android:textSize="14sp"
-                android:textColor="#666666"
+                android:textColor="#5E17EB"
+                android:layout_marginTop="2dp" />
+
+            <!-- Teacher Position -->
+            <TextView
+                android:id="@+id/tvPoste"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Position: Mathematics"
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:layout_marginTop="2dp" />
+
+            <!-- Teacher Class -->
+            <TextView
+                android:id="@+id/tvClasse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Class: P4"
+                android:textSize="14sp"
+                android:textColor="#888888"
                 android:layout_marginTop="2dp" />
 
             <!-- Teacher Code -->

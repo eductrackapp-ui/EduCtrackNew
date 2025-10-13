@@ -31,6 +31,6 @@
     <color name="colorShadow">#1F000000</color>
 
     <!-- ✅ Manquants pour corriger ton erreur -->
-    <color name="white">#FFFFFF</color> <!-- utilisé dans ic_launcher_background -->
-    <color name="colorAccent">#FF9800</color> <!-- utilisé dans activity_create_admin_account -->
+    <color name="white">#FFFFFF</color>
+    <color name="colorAccent">#FF9800</color>
 </resources>

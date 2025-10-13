@@ -83,24 +83,27 @@
         <activity android:name=".Activity.AdminNotification" android:exported="false"
             tools:ignore="Instantiatable" />
 
-        <!-- Parent Dashboard -->
-        <activity android:name=".Activity.ActivityParentDashboard" android:exported="true" />
-
         <!-- Modules -->
         <activity android:name=".TrackModule.ParentsReportsActivity" android:exported="true" />
         <activity android:name=".TrackModule.HomeworkActivity" android:exported="true" />
         <activity android:name=".TrackModule.StudentExamResultsActivity" android:exported="true" />
         <activity android:name=".TrackModule.AddCalculateScoresActivity" android:exported="true"/>
+        <activity android:name=".TrackModule.StudentExercisesActivity" android:exported="true"/>
+
 
         <!-- New Activities -->
+        <activity android:name=".Activity.LessonsActivity" android:exported="true"/>
+        <activity android:name=".Activity.StudentListActivity" android:exported="true"/>
         <activity android:name=".Activity.SearchActivity" android:exported="true"
             tools:ignore="Instantiatable" />
-        <activity android:name=".Activity.TeacherDashboard" android:exported="true"
+        <activity android:name=".Activity.AdminCreateTeacherActivity" android:exported="true"
             tools:ignore="Instantiatable" />
-        <activity android:name=".Activity.LessonsActivity" android:exported="true"
+        <activity android:name=".Activity.AdminStudentDashboardActivity" android:exported="true"/>
+        <activity android:name=".Activity.AnalyticsDashboard" android:exported="true"
             tools:ignore="Instantiatable" />
-        <activity android:name=".Activity.StudentListActivity" android:exported="true"
-            tools:ignore="Instantiatable" />
+        <activity android:name=".Activity.AdminProfileActivity" android:exported="true"
+            tools:ignore="MissingClass" />
+        <activity android:name=".Activity.SearchResultActivity" android:exported="true"/>
 
         <!-- Google Ads -->
         <meta-data
@@ -116,14 +119,6 @@
         <meta-data
             android:name="android.support.MULTIDEX_ENABLE"
             android:value="true" />
-
-        <!-- Other Activities -->
-        <activity android:name=".Activity.StudentDashboardActivity" />
-        <activity android:name=".Activity.AnalyticsDashboard"
-            tools:ignore="Instantiatable" />
-        <activity android:name=".Auth.ActivityTeacherRegister" />
-        <activity android:name=".Activity.AdminProfileActivity"
-            tools:ignore="MissingClass" />
 
     </application>
 </manifest>

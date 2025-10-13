@@ -16,7 +16,7 @@
 
     <!-- School names -->
     <string-array name="school_names">
-        <item>Select the school</item>
+        <item>Select school</item>
         <item>Eden Family School Kacyiru</item>
         <item>Eden Family School Gisozi</item>
         <item>Eden Family School Kimisagara</item>
@@ -42,15 +42,12 @@
 
     <!-- Gender list -->
     <string-array name="gender_list">
+        <item>Select gender</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>
-    <string-array name="periods">
-        <item>Select period</item>
-        <item>Period 1</item>
-        <item>Period 2</item>
-        <item>Period 3</item>
-    </string-array>
+
+    <!-- Years -->
     <string-array name="years">
         <item>Select year</item>
         <item>2026/2027</item>
@@ -61,5 +58,14 @@
         <item>2021/2022</item>
     </string-array>
 
+    <!-- Lessons -->
+    <string-array name="lessons">
+        <item>Science Élémentaire et Technologie</item>
+        <item>Kinyarwanda</item>
+        <item>English</item>
+        <item>Social Studies and Religion</item>
+        <item>Mathématique</item>
+        <item>Français</item>
+    </string-array>
 
 </resources>

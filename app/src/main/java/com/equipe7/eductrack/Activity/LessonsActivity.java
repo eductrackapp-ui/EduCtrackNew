@@ -1,10 +1,8 @@
 package com.equipe7.eductrack.Activity;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -14,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.equipe7.eductrack.Adapter.LessonAdapter;
 import com.equipe7.eductrack.R;
-import com.equipe7.eductrack.Utils.Lesson;
+import com.equipe7.eductrack.Utils.LessonActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -28,7 +26,7 @@ public class LessonsActivity extends AppCompatActivity implements LessonAdapter.
     
     private RecyclerView recyclerLessons;
     private LessonAdapter lessonAdapter;
-    private List<Lesson> lessonList;
+    private List<LessonActivity> lessonList;
     private ImageView btnBack, btnAddLesson;
     
     private FirebaseFirestore db;
@@ -96,7 +94,7 @@ public class LessonsActivity extends AppCompatActivity implements LessonAdapter.
                         // Load from Firestore
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                             try {
-                                Lesson lesson = doc.toObject(Lesson.class);
+                                LessonActivity lesson = doc.toObject(LessonActivity.class);
                                 lesson.setId(doc.getId());
                                 lessonList.add(lesson);
                             } catch (Exception e) {
@@ -126,7 +124,7 @@ public class LessonsActivity extends AppCompatActivity implements LessonAdapter.
         
         for (String classLevel : classes) {
             for (String subject : subjects) {
-                Lesson lesson = new Lesson(classLevel, subject, subject + " - " + classLevel);
+                LessonActivity lesson = new LessonActivity(classLevel, subject, subject + " - " + classLevel);
                 lesson.setDescription("Learn " + subject.toLowerCase() + " concepts for " + classLevel + " level");
                 lesson.setDuration(45); // 45 minutes
                 lesson.setStatus("active");
@@ -151,26 +149,26 @@ public class LessonsActivity extends AppCompatActivity implements LessonAdapter.
 
     // LessonAdapter.OnLessonActionListener implementation
     @Override
-    public void onLessonClick(Lesson lesson) {
+    public void onLessonClick(LessonActivity lesson) {
         Toast.makeText(this, "Lesson: " + lesson.getDisplayTitle(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onEditLesson(Lesson lesson) {
+    public void onEditLesson(LessonActivity lesson) {
         Toast.makeText(this, "Edit: " + lesson.getDisplayTitle(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onDeleteLesson(Lesson lesson) {
+    public void onDeleteLesson(LessonActivity lesson) {
         showDeleteConfirmation(lesson);
     }
 
     @Override
-    public void onViewDetails(Lesson lesson) {
+    public void onViewDetails(LessonActivity lesson) {
         Toast.makeText(this, "Details: " + lesson.getDisplayTitle(), Toast.LENGTH_SHORT).show();
     }
 
-    private void showDeleteConfirmation(Lesson lesson) {
+    private void showDeleteConfirmation(LessonActivity lesson) {
         new AlertDialog.Builder(this)
             .setTitle("Delete Lesson")
             .setMessage("Are you sure you want to delete \"" + lesson.getDisplayTitle() + "\"?")
@@ -179,7 +177,7 @@ public class LessonsActivity extends AppCompatActivity implements LessonAdapter.
             .show();
     }
 
-    private void deleteLesson(Lesson lesson) {
+    private void deleteLesson(LessonActivity lesson) {
         int position = lessonList.indexOf(lesson);
         if (position != -1) {
             lessonList.remove(position);

@@ -2,7 +2,7 @@ package com.equipe7.eductrack.Utils;
 
 import java.util.List;
 
-public class Lesson {
+public class LessonActivity {
     private String id;
     private String classLevel;
     private String subject;
@@ -16,21 +16,21 @@ public class Lesson {
     private long createdAt;
     private long updatedAt;
 
-    public Lesson() {
+    public LessonActivity() {
         // Empty constructor for Firestore
         this.status = "draft";
         this.createdAt = System.currentTimeMillis();
         this.updatedAt = System.currentTimeMillis();
     }
 
-    public Lesson(String classLevel, String subject, String title) {
+    public LessonActivity(String classLevel, String subject, String title) {
         this();
         this.classLevel = classLevel;
         this.subject = subject;
         this.title = title;
     }
 
-    public Lesson(String classLevel, String subject, String title, String description, String teacherId, String teacherName) {
+    public LessonActivity(String classLevel, String subject, String title, String description, String teacherId, String teacherName) {
         this(classLevel, subject, title);
         this.description = description;
         this.teacherId = teacherId;
