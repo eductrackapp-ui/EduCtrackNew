@@ -23,30 +23,47 @@ public class StudentExercisesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exercises_parent_beautiful);
-
-        etStudentCode = findViewById(R.id.etStudentCode);
-        btnLoadResults = findViewById(R.id.btnLoadResults);
-
-        // Only initialize views that exist in beautiful layout
-        tvMathW1 = findViewById(R.id.tvMathW1);
         
-        // Back button
-        findViewById(R.id.ivBack).setOnClickListener(v -> finish());
+        try {
+            setContentView(R.layout.activity_exercises_parent_beautiful);
 
-        db = FirebaseFirestore.getInstance();
+            db = FirebaseFirestore.getInstance();
 
-        btnLoadResults.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String studentCode = etStudentCode.getText().toString().trim();
-                if (studentCode.isEmpty()) {
-                    Toast.makeText(StudentExercisesActivity.this, "Entrer le code élève", Toast.LENGTH_SHORT).show();
-                    return;
+            // Safe view initialization
+            try {
+                View backButton = findViewById(R.id.ivBack);
+                if (backButton != null) {
+                    backButton.setOnClickListener(v -> finish());
                 }
-                loadExercisesResults(studentCode);
+            } catch (Exception e) {
+                // Ignore
             }
-        });
+
+            try {
+                etStudentCode = findViewById(R.id.etStudentCode);
+                btnLoadResults = findViewById(R.id.btnLoadResults);
+                tvMathW1 = findViewById(R.id.tvMathW1);
+
+                if (btnLoadResults != null) {
+                    btnLoadResults.setOnClickListener(v -> {
+                        if (etStudentCode != null) {
+                            String studentCode = etStudentCode.getText().toString().trim();
+                            if (!studentCode.isEmpty()) {
+                                loadExercisesResults(studentCode);
+                            } else {
+                                Toast.makeText(this, "Enter student code", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            } catch (Exception e) {
+                Toast.makeText(this, "Some features may not be available", Toast.LENGTH_SHORT).show();
+            }
+            
+        } catch (Exception e) {
+            Toast.makeText(this, "Error loading page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     private void loadExercisesResults(String studentCode) {

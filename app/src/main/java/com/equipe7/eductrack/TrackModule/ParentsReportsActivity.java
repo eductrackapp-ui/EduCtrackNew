@@ -1,6 +1,7 @@
 package com.equipe7.eductrack.TrackModule;
 
 import android.os.Bundle;
+import android.view.View;
 import com.equipe7.eductrack.R;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,29 +37,48 @@ public class ParentsReportsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parent_report_beautiful);
-
-        db = FirebaseFirestore.getInstance();
-
-        // Initialize only the views that exist in beautiful layout
-        etStudentCode = findViewById(R.id.etStudentCode);
-        btnLoadResults = findViewById(R.id.btnLoadResults);
-        btnUpdate = findViewById(R.id.btnUpdate);
-        tvAnnualTotal = findViewById(R.id.tvAnnualTotal);
-        tvVerdict = findViewById(R.id.tvVerdict);
-        progressChart = findViewById(R.id.progressChart);
         
-        // Back button
-        findViewById(R.id.ivBack).setOnClickListener(v -> finish());
-        
-        // Setup simple chart
-        if (progressChart != null) {
-            setupChart();
+        try {
+            setContentView(R.layout.activity_parent_report_beautiful);
+
+            db = FirebaseFirestore.getInstance();
+
+            // Safe view initialization
+            try {
+                View backButton = findViewById(R.id.ivBack);
+                if (backButton != null) {
+                    backButton.setOnClickListener(v -> finish());
+                }
+            } catch (Exception e) {
+                // Ignore
+            }
+
+            try {
+                etStudentCode = findViewById(R.id.etStudentCode);
+                btnLoadResults = findViewById(R.id.btnLoadResults);
+                btnUpdate = findViewById(R.id.btnUpdate);
+                tvAnnualTotal = findViewById(R.id.tvAnnualTotal);
+                tvVerdict = findViewById(R.id.tvVerdict);
+                progressChart = findViewById(R.id.progressChart);
+                
+                if (progressChart != null) {
+                    setupChart();
+                }
+                
+                if (btnLoadResults != null) {
+                    btnLoadResults.setOnClickListener(v -> loadStudentReport());
+                }
+                if (btnUpdate != null) {
+                    btnUpdate.setOnClickListener(v -> loadStudentReport());
+                }
+            } catch (Exception e) {
+                Toast.makeText(this, "Some features may not be available", Toast.LENGTH_SHORT).show();
+            }
+            
+        } catch (Exception e) {
+            Toast.makeText(this, "Error loading page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            finish();
         }
-        
-        // Setup button listeners
-        btnLoadResults.setOnClickListener(v -> loadStudentReport());
-        btnUpdate.setOnClickListener(v -> loadStudentReport());
     }
     
     private void setupChart() {
