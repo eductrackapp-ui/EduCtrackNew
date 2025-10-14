@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.equipe7.eductrack.Auth.LoginActivity;
+import com.equipe7.eductrack.Auth.UnifiedAuthActivity;
 import com.equipe7.eductrack.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -158,7 +158,7 @@ public class AdminProfileActivity extends AppCompatActivity {
     }
 
     private void goToLogin() {
-        Intent intent = new Intent(AdminProfileActivity.this, LoginActivity.class);
+        Intent intent = new Intent(AdminProfileActivity.this, UnifiedAuthActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

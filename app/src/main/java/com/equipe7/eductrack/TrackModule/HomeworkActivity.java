@@ -16,32 +16,25 @@ public class HomeworkActivity extends AppCompatActivity {
 
     private TextInputEditText etStudentCode;
     private MaterialButton btnLoadResults;
-    private TextView tvMathW1, tvFrenchW1, tvEnglishW2, tvSetW2,
-            tvSocialW3, tvKinyarwandaW3, tvSocialW4, tvKinyarwandaW4,
-            tvSocialW5, tvKinyarwandaW5, tvEnglishW6, tvMathW6;
+    private TextView tvMathW1, tvEnglishW2;
 
     private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homework_parent); // adapte le nom du layout
+        setContentView(R.layout.activity_homework_parent_beautiful);
 
+        // Initialize views - only the ones that exist in beautiful layout
         etStudentCode = findViewById(R.id.etStudentCode);
         btnLoadResults = findViewById(R.id.btnLoadResults);
 
+        // Only initialize views that exist
         tvMathW1 = findViewById(R.id.tvMathW1);
-        tvFrenchW1 = findViewById(R.id.tvFrenchW1);
         tvEnglishW2 = findViewById(R.id.tvEnglishW2);
-        tvSetW2 = findViewById(R.id.tvSetW2);
-        tvSocialW3 = findViewById(R.id.tvSocialW3);
-        tvKinyarwandaW3 = findViewById(R.id.tvKinyarwandaW3);
-        tvSocialW4 = findViewById(R.id.tvSocialW4);
-        tvKinyarwandaW4 = findViewById(R.id.tvKinyarwandaW4);
-        tvSocialW5 = findViewById(R.id.tvSocialW5);
-        tvKinyarwandaW5 = findViewById(R.id.tvKinyarwandaW5);
-        tvEnglishW6 = findViewById(R.id.tvEnglishW6);
-        tvMathW6 = findViewById(R.id.tvMathW6);
+        
+        // Back button
+        findViewById(R.id.ivBack).setOnClickListener(v -> finish());
 
         db = FirebaseFirestore.getInstance();
 
@@ -59,46 +52,35 @@ public class HomeworkActivity extends AppCompatActivity {
     }
 
     private void loadHomeworkResults(String studentCode) {
-        // Réinitialise tous les champs à "?"
-        tvMathW1.setText("?");
-        tvFrenchW1.setText("?");
-        tvEnglishW2.setText("?");
-        tvSetW2.setText("?");
-        tvSocialW3.setText("?");
-        tvKinyarwandaW3.setText("?");
-        tvSocialW4.setText("?");
-        tvKinyarwandaW4.setText("?");
-        tvSocialW5.setText("?");
-        tvKinyarwandaW5.setText("?");
-        tvEnglishW6.setText("?");
-        tvMathW6.setText("?");
+        // Reset fields
+        if (tvMathW1 != null) tvMathW1.setText("Math: --  |  French: --");
+        if (tvEnglishW2 != null) tvEnglishW2.setText("English: --  |  SET: --");
 
-        db.collection("exercices_resultats").document(studentCode)
+        db.collection("homework_results").document(studentCode)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        // Semaine 1
-                        tvMathW1.setText(documentSnapshot.getString("math_week1") != null ? documentSnapshot.getString("math_week1") : "?");
-                        tvFrenchW1.setText(documentSnapshot.getString("french_week1") != null ? documentSnapshot.getString("french_week1") : "?");
-                        // Semaine 2
-                        tvEnglishW2.setText(documentSnapshot.getString("english_week2") != null ? documentSnapshot.getString("english_week2") : "?");
-                        tvSetW2.setText(documentSnapshot.getString("set_week2") != null ? documentSnapshot.getString("set_week2") : "?");
-                        // Semaine 3
-                        tvSocialW3.setText(documentSnapshot.getString("social_week3") != null ? documentSnapshot.getString("social_week3") : "?");
-                        tvKinyarwandaW3.setText(documentSnapshot.getString("kinyarwanda_week3") != null ? documentSnapshot.getString("kinyarwanda_week3") : "?");
-                        // Semaine 4
-                        tvSocialW4.setText(documentSnapshot.getString("social_week4") != null ? documentSnapshot.getString("social_week4") : "?");
-                        tvKinyarwandaW4.setText(documentSnapshot.getString("kinyarwanda_week4") != null ? documentSnapshot.getString("kinyarwanda_week4") : "?");
-                        // Semaine 5
-                        tvSocialW5.setText(documentSnapshot.getString("social_week5") != null ? documentSnapshot.getString("social_week5") : "?");
-                        tvKinyarwandaW5.setText(documentSnapshot.getString("kinyarwanda_week5") != null ? documentSnapshot.getString("kinyarwanda_week5") : "?");
-                        // Semaine 6
-                        tvEnglishW6.setText(documentSnapshot.getString("english_week6") != null ? documentSnapshot.getString("english_week6") : "?");
-                        tvMathW6.setText(documentSnapshot.getString("math_week6") != null ? documentSnapshot.getString("math_week6") : "?");
+                        // Week 1
+                        String math = documentSnapshot.getString("math_week1");
+                        String french = documentSnapshot.getString("french_week1");
+                        if (tvMathW1 != null) {
+                            tvMathW1.setText("Math: " + (math != null ? math : "--") + "  |  French: " + (french != null ? french : "--"));
+                        }
+                        
+                        // Week 2
+                        String english = documentSnapshot.getString("english_week2");
+                        String set = documentSnapshot.getString("set_week2");
+                        if (tvEnglishW2 != null) {
+                            tvEnglishW2.setText("English: " + (english != null ? english : "--") + "  |  SET: " + (set != null ? set : "--"));
+                        }
+                        
+                        Toast.makeText(this, "Homework loaded successfully", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(this, "Aucun résultat trouvé pour ce code.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "No results found for this code", Toast.LENGTH_SHORT).show();
                     }
                 })
-                .addOnFailureListener(e -> Toast.makeText(this, "Erreur lors du chargement.", Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Error loading data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 }

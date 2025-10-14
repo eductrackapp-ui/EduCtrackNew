@@ -7,7 +7,7 @@ import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.equipe7.eductrack.Auth.LoginActivity;
+import com.equipe7.eductrack.Auth.UnifiedAuthActivity;
 import com.equipe7.eductrack.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -67,25 +67,39 @@ public class SplashActivity extends AppCompatActivity {
                     if (documentSnapshot.exists()) {
                         String role = documentSnapshot.getString("role");
 
-                        if ("admin".equalsIgnoreCase(role)) {
-                            goToActivity(AdminHomeActivity.class);
-                        } else if ("parent".equalsIgnoreCase(role)) {
-                            goToActivity(ParentHomeActivity.class);
-                        } else if ("teacher".equalsIgnoreCase(role)) {
-                            goToActivity(TeacherHomeActivity.class);
+                        if (role != null) {
+                            if ("admin".equalsIgnoreCase(role)) {
+                                goToActivity(AdminHomeActivity.class);
+                            } else if ("parent".equalsIgnoreCase(role)) {
+                                goToActivity(ParentHomeActivity.class);
+                            } else if ("teacher".equalsIgnoreCase(role)) {
+                                goToActivity(TeacherHomeActivity.class);
+                            } else if ("student".equalsIgnoreCase(role)) {
+                                // For now, redirect students to parent portal
+                                goToActivity(ParentHomeActivity.class);
+                            } else {
+                                // Si le rôle est inconnu → retour login
+                                goToLogin();
+                            }
                         } else {
-                            // Si le rôle est inconnu → retour login
+                            // Role is null - let the login activity handle profile creation
                             goToLogin();
                         }
                     } else {
+                        // Document doesn't exist - let the login activity handle it
+                        // Don't immediately sign out, let UnifiedAuthActivity create the profile
+                        android.util.Log.i("SplashActivity", "User document not found for existing Firebase user, redirecting to login");
                         goToLogin();
                     }
                 })
-                .addOnFailureListener(e -> goToLogin());
+                .addOnFailureListener(e -> {
+                    android.util.Log.e("SplashActivity", "Failed to get user document", e);
+                    goToLogin();
+                });
     }
 
     private void goToLogin() {
-        startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(this, UnifiedAuthActivity.class));
         finish();
     }
 

@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.equipe7.eductrack.Activity.AdminHomeActivity;
+import com.equipe7.eductrack.Activity.AdminHomeActivityNew;
 import com.equipe7.eductrack.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -49,7 +49,7 @@ public class AdminLoginActivity extends AppCompatActivity {
 
         // Bouton retour
         ivBack.setOnClickListener(v -> {
-            Intent intent = new Intent(AdminLoginActivity.this, LoginActivity.class);
+            Intent intent = new Intent(AdminLoginActivity.this, UnifiedAuthActivity.class);
             startActivity(intent);
             finish(); // ferme AdminLoginActivity
         });
@@ -105,7 +105,7 @@ public class AdminLoginActivity extends AppCompatActivity {
 
                                     if (documentSnapshot.exists()) {
                                         Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(AdminLoginActivity.this, AdminHomeActivity.class));
+                                        startActivity(new Intent(AdminLoginActivity.this, AdminHomeActivityNew.class));
                                         finish(); // Ferme l'écran de login
                                     } else {
                                         Toast.makeText(this, "Accès refusé : vous n'êtes pas administrateur", Toast.LENGTH_LONG).show();

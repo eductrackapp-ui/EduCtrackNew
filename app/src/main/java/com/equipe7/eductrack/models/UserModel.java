@@ -1,5 +1,7 @@
 package com.equipe7.eductrack.models;
 
+import java.util.Date;
+
 public class UserModel {
     private String name;
     private String email;
@@ -7,6 +9,13 @@ public class UserModel {
     private String subject; // matière enseignée (si teacher)
     private String assignedClass; // classe assignée (ex: P1, P2...)
     private String code; // code unique (ex: EDF-TCH-001)
+    
+    // Additional fields for enhanced auth
+    private String phone;
+    private String school;
+    private String classLevel;
+    private Date createdAt;
+    private boolean active;
 
     // 🔥 Obligatoire pour Firestore
     public UserModel() {}
@@ -39,4 +48,20 @@ public class UserModel {
 
     public String getCode() { return code; }
     public void setCode(String code) { this.code = code; }
+    
+    // Additional getters and setters
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+    
+    public String getSchool() { return school; }
+    public void setSchool(String school) { this.school = school; }
+    
+    public String getClassLevel() { return classLevel; }
+    public void setClassLevel(String classLevel) { this.classLevel = classLevel; }
+    
+    public Date getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+    
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 }

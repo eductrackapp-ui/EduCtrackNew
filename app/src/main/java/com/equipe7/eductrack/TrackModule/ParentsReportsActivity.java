@@ -36,34 +36,40 @@ public class ParentsReportsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parent_report);
+        setContentView(R.layout.activity_parent_report_beautiful);
 
         db = FirebaseFirestore.getInstance();
 
+        // Initialize only the views that exist in beautiful layout
         etStudentCode = findViewById(R.id.etStudentCode);
         btnLoadResults = findViewById(R.id.btnLoadResults);
         btnUpdate = findViewById(R.id.btnUpdate);
-        tableLessons = findViewById(R.id.tableLessons);
         tvAnnualTotal = findViewById(R.id.tvAnnualTotal);
         tvVerdict = findViewById(R.id.tvVerdict);
         progressChart = findViewById(R.id.progressChart);
-
-        // Map all EditTexts and TextViews for easy access
-        for (String subject : subjectKeys) {
-            for (String trimester : trimesters) {
-                for (String type : types) {
-                    String idName = "et" + subject + type + trimester;
-                    int resId = getResources().getIdentifier(idName, "id", getPackageName());
-                    if (resId != 0) editTexts.put(idName, findViewById(resId));
-                }
-                String totalId = "tv" + subject + "Total" + trimester;
-                int totalResId = getResources().getIdentifier(totalId, "id", getPackageName());
-                if (totalResId != 0) totalTexts.put(totalId, findViewById(totalResId));
-            }
+        
+        // Back button
+        findViewById(R.id.ivBack).setOnClickListener(v -> finish());
+        
+        // Setup simple chart
+        if (progressChart != null) {
+            setupChart();
         }
-
+        
+        // Setup button listeners
         btnLoadResults.setOnClickListener(v -> loadStudentReport());
         btnUpdate.setOnClickListener(v -> loadStudentReport());
+    }
+    
+    private void setupChart() {
+        if (progressChart != null) {
+            progressChart.getDescription().setEnabled(false);
+            progressChart.setFitBars(true);
+        }
+    }
+    
+    private void loadSimplifiedReport(String code) {
+        Toast.makeText(this, "Loading report data...", Toast.LENGTH_SHORT).show();
     }
 
     private void loadStudentReport() {
@@ -94,11 +100,9 @@ public class ParentsReportsActivity extends AppCompatActivity {
     }
 
     private void clearTable() {
-        for (EditText et : editTexts.values()) et.setText("");
-        for (TextView tv : totalTexts.values()) tv.setText("--");
-        tvAnnualTotal.setText("Annual Total: -- | Annual %: --%");
-        tvVerdict.setText("Verdict: --");
-        progressChart.clear();
+        if (tvAnnualTotal != null) tvAnnualTotal.setText("Annual Total: -- | Annual %: --%");
+        if (tvVerdict != null) tvVerdict.setText("Verdict: --");
+        if (progressChart != null) progressChart.clear();
     }
 
     private void fillTableWithData(Map<String, Object> data) {
@@ -139,12 +143,18 @@ public class ParentsReportsActivity extends AppCompatActivity {
 
         // Annual summary
         double percent = annualMax > 0 ? (annualTotal * 100.0 / annualMax) : 0;
-        tvAnnualTotal.setText("Annual Total: " + annualTotal + " | Annual %: " + String.format(Locale.US, "%.1f", percent) + "%");
+        if (tvAnnualTotal != null) {
+            tvAnnualTotal.setText("Annual Total: " + annualTotal + " | Annual %: " + String.format(Locale.US, "%.1f", percent) + "%");
+        }
         String verdict = percent >= 50 ? "Pass" : "Fail";
-        tvVerdict.setText("Verdict: " + verdict);
+        if (tvVerdict != null) {
+            tvVerdict.setText("Verdict: " + verdict);
+        }
 
         // Bar chart
-        showBarChart(subjectTotals, annualMax / subjectTotals.size());
+        if (progressChart != null && !subjectTotals.isEmpty()) {
+            showBarChart(subjectTotals, annualMax / subjectTotals.size());
+        }
     }
 
     private void showBarChart(Map<String, Double> subjectTotals, double maxPerSubject) {

@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.equipe7.eductrack.Activity.AdminHomeActivity;
+import com.equipe7.eductrack.Activity.AdminHomeActivityNew;
 import com.equipe7.eductrack.Firebase.FirebaseManager;
 import com.equipe7.eductrack.R;
 import com.google.firebase.auth.FirebaseUser;
@@ -121,7 +121,7 @@ public class CreateAdminAccountActivity extends AppCompatActivity {
                             .set(adminData)
                             .addOnSuccessListener(unused -> {
                                 toast("✅ Admin account created!");
-                                startActivity(new Intent(this, AdminHomeActivity.class));
+                                startActivity(new Intent(this, AdminHomeActivityNew.class));
                                 finish();
                             })
                             .addOnFailureListener(e ->

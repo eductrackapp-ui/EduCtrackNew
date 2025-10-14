@@ -46,7 +46,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         // Back arrow to LoginActivity
         ivBack.setOnClickListener(v -> {
-            startActivity(new Intent(ForgotPasswordActivity.this, LoginActivity.class));
+            startActivity(new Intent(ForgotPasswordActivity.this, UnifiedAuthActivity.class));
             finish();
         });
 

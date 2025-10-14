@@ -33,4 +33,9 @@
     <!-- ✅ Manquants pour corriger ton erreur -->
     <color name="white">#FFFFFF</color>
     <color name="colorAccent">#FF9800</color>
+
+    <!-- 🎨 Auth System Colors -->
+    <color name="primary_color">#667eea</color>
+    <color name="auth_gradient_start">#667eea</color>
+    <color name="auth_gradient_end">#764ba2</color>
 </resources>

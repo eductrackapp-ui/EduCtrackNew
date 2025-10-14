@@ -49,7 +49,7 @@
         </activity>
 
         <!-- Authentication -->
-        <activity android:name=".Auth.LoginActivity" android:exported="true" />
+        <activity android:name=".Auth.UnifiedAuthActivity" android:exported="true" />
         <activity android:name=".Auth.ForgotPasswordActivity" android:exported="true" />
         <activity android:name=".Auth.AdminLoginActivity" android:exported="true" />
         <activity android:name=".Auth.AdminForgotPassword" android:exported="true" />
@@ -69,8 +69,14 @@
         <!-- Home screens -->
         <activity android:name=".Activity.ParentHomeActivity" android:exported="true" />
         <activity android:name=".Activity.AdminHomeActivity" android:exported="true" />
+        <activity android:name=".Activity.AdminHomeActivityNew" android:exported="true" />
         <activity android:name=".Activity.TeacherHomeActivity" android:exported="true"
             tools:ignore="Instantiatable" />
+        
+        <!-- Admin Activities -->
+        <activity android:name=".Activity.AdminAnalyticsActivity" android:exported="false" />
+        <activity android:name=".Activity.AdminSettingsActivity" android:exported="false" />
+        <activity android:name=".Activity.AdminUserManagementActivityEnhanced" android:exported="false" />
 
         <!-- Profile -->
         <activity android:name=".Activity.ProfileActivity" android:exported="true" />
@@ -123,7 +129,22 @@
             android:name="com.equipe7.eductrack.TrackModule.ActivityAddReportTeacher"
             android:exported="false" />
 
+        <!-- Teacher Exercise Management Activities -->
+        <activity
+            android:name=".Activity.CreateExerciseActivity"
+            android:exported="false"
+            android:theme="@style/Theme.EduCtrack" />
 
+        <activity
+            android:name=".Activity.GradingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.EduCtrack" />
+
+        <!-- Admin Management Activities -->
+        <activity
+            android:name=".Activity.AdminUserManagementActivity"
+            android:exported="false"
+            android:theme="@style/Theme.EduCtrack" />
 
     </application>
 </manifest>

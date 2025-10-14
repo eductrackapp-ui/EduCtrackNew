@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.equipe7.eductrack.Activity.AdminHomeActivity;
+import com.equipe7.eductrack.Activity.AdminHomeActivityNew;
 import com.equipe7.eductrack.Firebase.FirebaseManager;
 import com.equipe7.eductrack.R;
 
@@ -221,7 +221,7 @@ public class VerificationCodeActivity extends AppCompatActivity {
     }
 
     private void goToHomePage() {
-        Intent intent = new Intent(this, AdminHomeActivity.class);
+        Intent intent = new Intent(this, AdminHomeActivityNew.class);
         startActivity(intent);
         finish();
     }

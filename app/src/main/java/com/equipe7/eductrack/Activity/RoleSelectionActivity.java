@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.equipe7.eductrack.Auth.ActivityParentRegister;
 import com.equipe7.eductrack.Auth.CreateAdminAccountActivity;
-import com.equipe7.eductrack.Auth.LoginActivity;
+import com.equipe7.eductrack.Auth.UnifiedAuthActivity;
 import com.equipe7.eductrack.R;
 
 public class RoleSelectionActivity extends AppCompatActivity {
@@ -52,7 +52,7 @@ public class RoleSelectionActivity extends AppCompatActivity {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(android.view.View widget) {
-                Intent intent = new Intent(RoleSelectionActivity.this, LoginActivity.class);
+                Intent intent = new Intent(RoleSelectionActivity.this, UnifiedAuthActivity.class);
                 startActivity(intent);
             }
 

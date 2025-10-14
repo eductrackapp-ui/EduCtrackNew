@@ -68,4 +68,20 @@
         <item>Français</item>
     </string-array>
 
+    <!-- Exercise types -->
+    <string-array name="exercise_types">
+        <item>Exercise</item>
+        <item>Assignment</item>
+        <item>Quiz</item>
+        <item>Exam</item>
+        <item>Project</item>
+    </string-array>
+
+    <!-- Difficulty levels -->
+    <string-array name="difficulty_levels">
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </string-array>
+
 </resources>
