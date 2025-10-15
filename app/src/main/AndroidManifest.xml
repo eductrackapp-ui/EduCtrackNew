@@ -77,6 +77,11 @@
         <activity android:name=".Activity.AddChildActivity" android:exported="false" />
         <activity android:name=".Activity.ChildDetailActivity" android:exported="false" />
         
+        <!-- Teacher Activities -->
+        <activity android:name=".Activity.TeacherClassManagementActivity" android:exported="false" />
+        <activity android:name=".Activity.TeacherExercisesActivity" android:exported="false" />
+        <activity android:name=".Activity.ExerciseGradingActivity" android:exported="false" />
+        
         <!-- Admin Activities -->
         <activity android:name=".Activity.AdminAnalyticsActivity" android:exported="false" />
         <activity android:name=".Activity.AdminSettingsActivity" android:exported="false" />

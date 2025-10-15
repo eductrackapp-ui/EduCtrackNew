@@ -139,51 +139,103 @@ public class ChildDetailActivity extends AppCompatActivity {
     }
 
     private void loadPerformanceData() {
-        // Load real performance data from Firestore
+        // Load real performance data from Firestore (teacher-assigned grades)
         if (childId != null) {
             firestore.collection("performance")
-                    .whereEqualTo("childId", childId)
+                    .whereEqualTo("studentId", childId)
+                    .whereEqualTo("status", "published")
+                    .orderBy("gradedDate", com.google.firebase.firestore.Query.Direction.DESCENDING)
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
                         if (!queryDocumentSnapshots.isEmpty()) {
                             List<PerformanceData> performanceList = new ArrayList<>();
                             double totalGrade = 0;
                             int subjectCount = 0;
+                            Map<String, Double> subjectAverages = new HashMap<>();
+                            Map<String, Integer> subjectCounts = new HashMap<>();
                             
                             for (var doc : queryDocumentSnapshots.getDocuments()) {
                                 String subject = doc.getString("subject");
-                                Double grade = doc.getDouble("grade");
-                                String status = doc.getString("status");
+                                Double percentage = doc.getDouble("percentage");
+                                String exerciseTitle = doc.getString("exerciseTitle");
+                                String exerciseType = doc.getString("exerciseType");
+                                String feedback = doc.getString("feedback");
                                 
-                                if (subject != null && grade != null) {
-                                    performanceList.add(new PerformanceData(childId, subject, grade, status != null ? status : "exam"));
-                                    totalGrade += grade;
+                                if (subject != null && percentage != null) {
+                                    // Create performance data with teacher feedback
+                                    PerformanceData perfData = new PerformanceData(childId, subject, percentage, exerciseType != null ? exerciseType : "exercise");
+                                    perfData.setTitle(exerciseTitle != null ? exerciseTitle : "Assignment");
+                                    perfData.setFeedback(feedback);
+                                    performanceList.add(perfData);
+                                    
+                                    // Calculate subject averages
+                                    subjectAverages.put(subject, subjectAverages.getOrDefault(subject, 0.0) + percentage);
+                                    subjectCounts.put(subject, subjectCounts.getOrDefault(subject, 0) + 1);
+                                    
+                                    totalGrade += percentage;
                                     subjectCount++;
                                 }
                             }
                             
                             // Update averages
                             if (subjectCount > 0) {
-                                weeklyAverage.setText(String.format("%.1f%%", totalGrade / subjectCount));
-                                monthlyAverage.setText(String.format("%.1f%%", totalGrade / subjectCount));
+                                double overallAverage = totalGrade / subjectCount;
+                                weeklyAverage.setText(String.format("%.1f%%", overallAverage));
+                                monthlyAverage.setText(String.format("%.1f%%", overallAverage));
+                                
+                                // Update child's overall average
+                                updateChildOverallAverage(overallAverage);
                             }
                             
-                            // Create grades map for adapter
+                            // Create grades map for adapter (subject averages)
                             Map<String, Double> gradesMap = new HashMap<>();
-                            for (PerformanceData perf : performanceList) {
-                                gradesMap.put(perf.getSubject(), perf.getGrade());
+                            for (Map.Entry<String, Double> entry : subjectAverages.entrySet()) {
+                                String subject = entry.getKey();
+                                double total = entry.getValue();
+                                int count = subjectCounts.get(subject);
+                                gradesMap.put(subject, total / count);
                             }
                             
                             subjectAdapter.updateData(gradesMap, performanceList);
                         } else {
-                            // Create sample data if no real data exists
-                            createSamplePerformanceData();
+                            // No teacher grades yet, show message
+                            createNoGradesMessage();
                         }
                     })
-                    .addOnFailureListener(e -> createSamplePerformanceData());
+                    .addOnFailureListener(e -> createNoGradesMessage());
         } else {
-            createSamplePerformanceData();
+            createNoGradesMessage();
         }
+    }
+    
+    private void updateChildOverallAverage(double average) {
+        // Update the child's overall average in Firestore
+        if (childId != null) {
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("overallAverage", average);
+            
+            String status;
+            if (average >= 85) status = "excellent";
+            else if (average >= 70) status = "good";
+            else status = "needs_improvement";
+            updates.put("status", status);
+            
+            firestore.collection("children").document(childId)
+                    .update(updates)
+                    .addOnSuccessListener(aVoid -> {
+                        // Updated successfully
+                    });
+        }
+    }
+    
+    private void createNoGradesMessage() {
+        weeklyAverage.setText("No grades yet");
+        monthlyAverage.setText("Waiting for teacher");
+        
+        // Create empty performance list with message
+        List<PerformanceData> emptyList = new ArrayList<>();
+        Map<String, Double> emptyGrades = new HashMap<>();
+        subjectAdapter.updateData(emptyGrades, emptyList);
     }
 
     private void createSamplePerformanceData() {

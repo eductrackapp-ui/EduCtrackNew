@@ -1,5 +1,6 @@
 package com.equipe7.eductrack.models;
 
+import com.google.firebase.firestore.Exclude;
 import java.util.Date;
 
 public class GradeEntry {
@@ -56,7 +57,7 @@ public class GradeEntry {
     public double getScore() { return score; }
     public void setScore(double score) { 
         this.score = score;
-        if (this.status.equals("pending")) {
+        if (this.status != null && this.status.equals("pending")) {
             this.status = "graded";
         }
     }
@@ -98,6 +99,7 @@ public class GradeEntry {
         return String.format("%.1f/%.0f", score, maxScore);
     }
     
+    @Exclude
     public String getGradeColor() {
         double percentage = getPercentage();
         if (percentage >= 85) return "#4CAF50"; // Green
@@ -123,11 +125,13 @@ public class GradeEntry {
         return "Needs Improvement";
     }
     
+    @Exclude
     public String getStatusColor() {
+        if (status == null) return "#9E9E9E";
         switch (status.toLowerCase()) {
             case "pending": return "#FF9800";
             case "graded": return "#4CAF50";
-            case "reviewed": return "#2196F3";
+            case "published": return "#2196F3";
             default: return "#9E9E9E";
         }
     }

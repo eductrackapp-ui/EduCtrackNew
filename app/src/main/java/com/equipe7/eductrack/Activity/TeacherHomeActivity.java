@@ -452,14 +452,14 @@ public class TeacherHomeActivity extends AppCompatActivity {
     }
 
     private void createNewExercise() {
-        // Navigate to exercise creation activity
-        Intent intent = new Intent(this, CreateExerciseActivity.class);
+        // Navigate to class management first, then exercise creation
+        Intent intent = new Intent(this, TeacherClassManagementActivity.class);
         startActivity(intent);
     }
 
     private void openGradingInterface() {
-        // Navigate to grading interface
-        Intent intent = new Intent(this, GradingActivity.class);
+        // Navigate to class management for grading
+        Intent intent = new Intent(this, TeacherClassManagementActivity.class);
         startActivity(intent);
     }
 }

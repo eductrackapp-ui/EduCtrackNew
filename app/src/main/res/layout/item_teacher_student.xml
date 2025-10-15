@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/studentCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginVertical="6dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <!-- Performance Indicator -->
+        <View
+            android:id="@+id/performanceIndicator"
+            android:layout_width="4dp"
+            android:layout_height="60dp"
+            android:background="#4CAF50"
+            android:layout_marginEnd="16dp" />
+
+        <!-- Student Avatar -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="4dp">
+
+            <ImageView
+                android:id="@+id/studentAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/circular_avatar_bg"
+                android:padding="8dp"
+                android:src="@drawable/ic_student_avatar"
+                android:scaleType="centerCrop" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Student Info -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/studentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student Name"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/studentCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID: STU001AB"
+                android:textColor="#666666"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/studentClass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Class 6A"
+                android:textColor="#666666"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins" />
+        </LinearLayout>
+
+        <!-- Performance Section -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginEnd="12dp">
+
+            <TextView
+                android:id="@+id/studentGrade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="85.5%"
+                android:textColor="#333333"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="2dp"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:id="@+id/performanceStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#F5F5F5"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp"
+                    android:text="Excellent"
+                    android:textColor="#4CAF50"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <!-- Grade Button -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/btnGrade"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/grade_button_bg"
+                android:padding="10dp"
+                android:src="@drawable/ic_grade"
+                app:tint="#FFFFFF"
+                android:contentDescription="Grade Student" />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

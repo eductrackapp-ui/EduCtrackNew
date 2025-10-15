@@ -17,6 +17,7 @@ public class PerformanceData {
     private String description;
     private double maxGrade;
     private String teacherComment;
+    private String feedback;
     
     public PerformanceData() {
         // Required empty constructor for Firebase
@@ -91,6 +92,9 @@ public class PerformanceData {
         if (percentage >= 60) return "#FF9800"; // Orange
         return "#F44336"; // Red
     }
+    
+    public String getFeedback() { return feedback; }
+    public void setFeedback(String feedback) { this.feedback = feedback; }
     
     public String getTypeIcon() {
         switch (type.toLowerCase()) {
