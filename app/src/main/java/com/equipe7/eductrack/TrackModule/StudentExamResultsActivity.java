@@ -57,6 +57,9 @@ public class StudentExamResultsActivity extends AppCompatActivity {
                         }
                     });
                 }
+                
+                // Auto-load student code from current user's child if available
+                loadStudentCodeFromChild();
             } catch (Exception e) {
                 Toast.makeText(this, "Some features may not be available", Toast.LENGTH_SHORT).show();
             }
@@ -64,6 +67,29 @@ public class StudentExamResultsActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(this, "Error loading page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             finish();
+        }
+    }
+    
+    private void loadStudentCodeFromChild() {
+        com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            db.collection("children")
+                    .whereEqualTo("parentId", user.getUid())
+                    .limit(1)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            String studentCode = queryDocumentSnapshots.getDocuments().get(0).getString("studentCode");
+                            if (studentCode != null && !studentCode.isEmpty() && etStudentCode != null) {
+                                etStudentCode.setText(studentCode);
+                                // Auto-load results
+                                loadExamResults(studentCode);
+                            }
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        // Silent failure - manual entry still available
+                    });
         }
     }
 

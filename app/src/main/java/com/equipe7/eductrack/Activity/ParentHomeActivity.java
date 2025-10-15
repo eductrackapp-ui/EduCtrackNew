@@ -62,13 +62,17 @@ public class ParentHomeActivity extends AppCompatActivity {
     private List<SearchableItem> database = new ArrayList<>();
     private DatabaseReference dbRef;
     private FirebaseFirestore firestore;
-    private TextView tvWelcome, tvParentName, childName, childClass, childGrade;
-    private TextView overallGrade, performanceStatus, weeklyAverage, monthlyAverage;
-    private ImageView childAvatar, navProfile, navNotifications;
-    private RecyclerView subjectPerformanceRecycler;
+    private TextView tvWelcome, tvParentName, childrenCount;
+    private TextView childName, childClass, childGrade, overallGrade, performanceStatus;
+    private TextView weeklyAverage, monthlyAverage;
+    private ImageView navProfile, navNotifications;
+    private RecyclerView childrenRecyclerView, subjectPerformanceRecycler;
     private SubjectPerformanceAdapter subjectAdapter;
-    private Child currentChild;
+    private com.equipe7.eductrack.adapters.ChildCardAdapter childCardAdapter;
+    private androidx.cardview.widget.CardView noChildrenCard;
+    private List<Child> childrenList = new ArrayList<>();
     private List<PerformanceData> performanceList = new ArrayList<>();
+    private Child currentChild;
     private String parentName = "";
     private String actualChildName = "";
 
@@ -88,16 +92,26 @@ public class ParentHomeActivity extends AppCompatActivity {
     private void initializeViews() {
         tvWelcome = findViewById(R.id.tvWelcome);
         tvParentName = findViewById(R.id.tvParentName);
+        childrenCount = findViewById(R.id.childrenCount);
+        weeklyAverage = findViewById(R.id.weeklyAverage);
+        monthlyAverage = findViewById(R.id.monthlyAverage);
+        navProfile = findViewById(R.id.navProfile);
+        navNotifications = findViewById(R.id.navNotifications);
+        noChildrenCard = findViewById(R.id.noChildrenCard);
+        
+        // Initialize old single child views (for compatibility with old methods)
+        // These will be null since they don't exist in new layout, but that's OK
         childName = findViewById(R.id.childName);
         childClass = findViewById(R.id.childClass);
         childGrade = findViewById(R.id.childGrade);
         overallGrade = findViewById(R.id.overallGrade);
         performanceStatus = findViewById(R.id.performanceStatus);
-        weeklyAverage = findViewById(R.id.weeklyAverage);
-        monthlyAverage = findViewById(R.id.monthlyAverage);
-        childAvatar = findViewById(R.id.childAvatar);
-        navProfile = findViewById(R.id.navProfile);
-        navNotifications = findViewById(R.id.navNotifications);
+        
+        // Initialize RecyclerView for children cards
+        childrenRecyclerView = findViewById(R.id.childrenRecyclerView);
+        childCardAdapter = new com.equipe7.eductrack.adapters.ChildCardAdapter(this, childrenList);
+        childrenRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        childrenRecyclerView.setAdapter(childCardAdapter);
         
         // Initialize RecyclerView for subject performance
         subjectPerformanceRecycler = findViewById(R.id.subjectPerformanceRecycler);
@@ -159,6 +173,14 @@ public class ParentHomeActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HomeworkActivity.class));
             } catch (Exception e) {
                 Toast.makeText(this, "Opening Homework...", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+        findViewById(R.id.btnAddChild).setOnClickListener(v -> {
+            try {
+                startActivity(new Intent(this, AddChildActivity.class));
+            } catch (Exception e) {
+                Toast.makeText(this, "Error opening Add Child screen", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -277,33 +299,48 @@ public class ParentHomeActivity extends AppCompatActivity {
     private void loadChildDataFromFirestore(String parentUid) {
         firestore.collection("children")
                 .whereEqualTo("parentId", parentUid)
-                .limit(1)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    childrenList.clear();
+                    
                     if (!queryDocumentSnapshots.isEmpty()) {
-                        var childDoc = queryDocumentSnapshots.getDocuments().get(0);
-                        actualChildName = childDoc.getString("name");
-                        String childClassValue = childDoc.getString("class");
-                        String childGradeValue = childDoc.getString("grade");
+                        for (var childDoc : queryDocumentSnapshots.getDocuments()) {
+                            Child child = new Child();
+                            child.setChildId(childDoc.getId());
+                            child.setName(childDoc.getString("name"));
+                            child.setClassName(childDoc.getString("className"));
+                            child.setGrade(childDoc.getString("grade"));
+                            child.setBranch(childDoc.getString("branch"));
+                            child.setStudentCode(childDoc.getString("studentCode"));
+                            child.setParentId(childDoc.getString("parentId"));
+                            
+                            Double overallAvg = childDoc.getDouble("overallAverage");
+                            if (overallAvg != null) {
+                                child.setOverallAverage(overallAvg);
+                            }
+                            
+                            String status = childDoc.getString("status");
+                            if (status != null) {
+                                child.setStatus(status);
+                            }
+                            
+                            childrenList.add(child);
+                        }
                         
-                        if (actualChildName != null) {
-                            childName.setText(actualChildName);
-                        }
-                        if (childClassValue != null) {
-                            childClass.setText(childClassValue);
-                        }
-                        if (childGradeValue != null) {
-                            childGrade.setText(childGradeValue);
-                        }
+                        updateChildrenDisplay();
                         
-                        // Load performance data for this child
-                        loadChildPerformanceData(childDoc.getId());
+                        // Load performance data for first child if available
+                        if (!childrenList.isEmpty()) {
+                            loadChildPerformanceData(childrenList.get(0).getChildId());
+                        }
                     } else {
-                        // Create sample child data if none exists
-                        createSampleChildData(parentUid);
+                        updateChildrenDisplay();
                     }
                 })
-                .addOnFailureListener(e -> createSampleChildData(parentUid));
+                .addOnFailureListener(e -> {
+                    childrenList.clear();
+                    updateChildrenDisplay();
+                });
     }
 
     private void loadChildData(String parentId) {
@@ -334,14 +371,17 @@ public class ParentHomeActivity extends AppCompatActivity {
     }
 
     private void displayChildInfo(Child child) {
-        childName.setText(child.getName());
-        childClass.setText(child.getClassName());
-        childGrade.setText(child.getGrade());
-        overallGrade.setText(child.getGradeDisplay());
+        // Safe null checks for old UI elements that may not exist in new layout
+        if (childName != null) childName.setText(child.getName());
+        if (childClass != null) childClass.setText(child.getClassName());
+        if (childGrade != null) childGrade.setText(child.getGrade());
+        if (overallGrade != null) overallGrade.setText(child.getGradeDisplay());
         
         // Set performance status with color
-        performanceStatus.setText(child.getStatus().toUpperCase());
-        performanceStatus.setBackgroundColor(Color.parseColor(child.getStatusColor()));
+        if (performanceStatus != null) {
+            performanceStatus.setText(child.getStatus().toUpperCase());
+            performanceStatus.setBackgroundColor(Color.parseColor(child.getStatusColor()));
+        }
     }
 
     private void loadPerformanceData(String childId) {
@@ -537,9 +577,9 @@ public class ParentHomeActivity extends AppCompatActivity {
                 .add(childData)
                 .addOnSuccessListener(documentReference -> {
                     actualChildName = "Alex Johnson";
-                    childName.setText(actualChildName);
-                    childClass.setText("Grade 5A");
-                    childGrade.setText("5th Grade");
+                    if (childName != null) childName.setText(actualChildName);
+                    if (childClass != null) childClass.setText("Grade 5A");
+                    if (childGrade != null) childGrade.setText("5th Grade");
                     
                     // Create sample performance data
                     createSamplePerformanceData(documentReference.getId());
@@ -548,11 +588,13 @@ public class ParentHomeActivity extends AppCompatActivity {
 
     private void createSamplePerformanceData(String childId) {
         // Create sample performance data
-        overallGrade.setText("85%");
-        performanceStatus.setText("Good");
-        performanceStatus.setTextColor(Color.parseColor("#4CAF50"));
-        weeklyAverage.setText("87%");
-        monthlyAverage.setText("83%");
+        if (overallGrade != null) overallGrade.setText("85%");
+        if (performanceStatus != null) {
+            performanceStatus.setText("Good");
+            performanceStatus.setTextColor(Color.parseColor("#4CAF50"));
+        }
+        if (weeklyAverage != null) weeklyAverage.setText("87%");
+        if (monthlyAverage != null) monthlyAverage.setText("83%");
         
         // Create sample subject performance
         performanceList.clear();
@@ -598,15 +640,17 @@ public class ParentHomeActivity extends AppCompatActivity {
                         
                         if (subjectCount > 0) {
                             double average = totalGrade / subjectCount;
-                            overallGrade.setText(String.format("%.0f%%", average));
+                            if (overallGrade != null) overallGrade.setText(String.format("%.0f%%", average));
                             
                             String status = average >= 90 ? "Excellent" : average >= 80 ? "Good" : "Needs Improvement";
-                            performanceStatus.setText(status);
-                            
-                            int color = average >= 90 ? Color.parseColor("#4CAF50") : 
-                                       average >= 80 ? Color.parseColor("#FF9800") : 
-                                       Color.parseColor("#F44336");
-                            performanceStatus.setTextColor(color);
+                            if (performanceStatus != null) {
+                                performanceStatus.setText(status);
+                                
+                                int color = average >= 90 ? Color.parseColor("#4CAF50") : 
+                                           average >= 80 ? Color.parseColor("#FF9800") : 
+                                           Color.parseColor("#F44336");
+                                performanceStatus.setTextColor(color);
+                            }
                         }
                         
                         // Create grades map for adapter
@@ -622,6 +666,33 @@ public class ParentHomeActivity extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> createSamplePerformanceData(childId));
+    }
+
+    private void updateChildrenDisplay() {
+        int childrenCount = childrenList.size();
+        
+        // Update children count badge
+        this.childrenCount.setText(String.valueOf(childrenCount));
+        
+        // Show/hide no children message
+        if (childrenCount == 0) {
+            noChildrenCard.setVisibility(android.view.View.VISIBLE);
+            childrenRecyclerView.setVisibility(android.view.View.GONE);
+        } else {
+            noChildrenCard.setVisibility(android.view.View.GONE);
+            childrenRecyclerView.setVisibility(android.view.View.VISIBLE);
+            childCardAdapter.updateChildren(childrenList);
+        }
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Reload children data when returning from AddChildActivity
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            loadChildDataFromFirestore(user.getUid());
+        }
     }
 
     @Override

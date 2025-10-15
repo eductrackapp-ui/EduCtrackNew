@@ -15,6 +15,8 @@ public class Child {
     private Map<String, Double> currentGrades;
     private double overallAverage;
     private String status; // "excellent", "good", "needs_improvement"
+    private String studentCode; // Unique randomized student code
+    private String branch; // School branch (Kacyiru, Gisozi, Kimisagara)
     
     public Child() {
         // Required empty constructor for Firebase
@@ -89,4 +91,10 @@ public class Child {
     public String getGradeDisplay() {
         return String.format("%.1f%%", overallAverage);
     }
+    
+    public String getStudentCode() { return studentCode; }
+    public void setStudentCode(String studentCode) { this.studentCode = studentCode; }
+    
+    public String getBranch() { return branch; }
+    public void setBranch(String branch) { this.branch = branch; }
 }

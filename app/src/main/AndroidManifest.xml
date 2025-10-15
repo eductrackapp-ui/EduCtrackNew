@@ -73,6 +73,10 @@
         <activity android:name=".Activity.TeacherHomeActivity" android:exported="true"
             tools:ignore="Instantiatable" />
         
+        <!-- Parent Activities -->
+        <activity android:name=".Activity.AddChildActivity" android:exported="false" />
+        <activity android:name=".Activity.ChildDetailActivity" android:exported="false" />
+        
         <!-- Admin Activities -->
         <activity android:name=".Activity.AdminAnalyticsActivity" android:exported="false" />
         <activity android:name=".Activity.AdminSettingsActivity" android:exported="false" />
